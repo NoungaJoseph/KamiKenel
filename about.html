@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Karelian Bear Dogs - Kami Kennels</title>
+    <meta name="description"
+        content="Learn about the Karelian Bear Dog breed, their history, characteristics, and why they make exceptional companions. Expert information from Kami Kennels.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .breed-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .characteristic-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .characteristic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                padding-top: 50px;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
+                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    About the Karelian Bear Dog
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Discover the remarkable history, unique characteristics, and exceptional qualities that make the
+                    Karelian Bear Dog one of the most fascinating breeds in the world.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breed History Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in-up">
+                    <h2 class="text-4xl font-display font-bold mb-6">Rich Heritage & History</h2>
+                    <p class="text-gray-600 mb-6">
+                        The Karelian Bear Dog, known as "Karjalankarhukoira" in Finnish, is an ancient breed with roots
+                        tracing back over 2,000 years to the Komi people of Northwestern Europe. These remarkable dogs
+                        were originally bred by Russian and Finnish peasants for hunting large game and guarding
+                        property.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        The breed earned its current name around 1936 when organized breeding began with the goal of
+                        creating a tough, courageous dog capable of locating and barking at big game including bears,
+                        moose, wolves, and lynx. Despite nearly becoming extinct during World War II, dedicated fanciers
+                        re-established the breed using 43 surviving dogs.
+                    </p>
+                    <p class="text-gray-600">
+                        Today, the Karelian Bear Dog is one of the ten most popular breeds in Finland and is
+                        increasingly recognized worldwide for its exceptional hunting abilities and loyal companionship.
+                    </p>
+                </div>
+                <div class="fade-in-up" style="animation-delay: 0.2s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/www.akc.org/b2713d5593c6fd7cf6e29fa53c0015a3a6812853.jpg"
+                        alt="Karelian Bear Dog" class="w-full h-96 object-cover breed-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breed Characteristics -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Breed Characteristics
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Understanding the unique traits and qualities that define the Karelian Bear Dog breed.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="characteristic-card bg-white p-6 rounded-lg shadow-lg fade-in-up"
+                    style="animation-delay: 0.4s;">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-ruler text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Size & Build</h3>
+                    <p class="text-gray-600">Medium-sized with robust conformation. Males: 21-24 inches, 55-61 lbs.
+                        Females: 19-22 inches, 37-44 lbs. Strong without being heavy, slightly longer than tall.</p>
+                </div>
+
+                <div class="characteristic-card bg-white p-6 rounded-lg shadow-lg fade-in-up"
+                    style="animation-delay: 0.5s;">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-palette text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Coat & Colors</h3>
+                    <p class="text-gray-600">Dense double coat with harsh, straight outer coat and soft undercoat.
+                        Classic black with white markings on head, neck, chest, belly and legs. 70/30 black/white ratio
+                        preferred.</p>
+                </div>
+
+                <div class="characteristic-card bg-white p-6 rounded-lg shadow-lg fade-in-up"
+                    style="animation-delay: 0.6s;">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Temperament</h3>
+                    <p class="text-gray-600">Courageous, persistent, and self-confident. Reserved but stable, never
+                        aggressive toward people. Highly devoted to master with strong protective instincts.</p>
+                </div>
+
+                <div class="characteristic-card bg-white p-6 rounded-lg shadow-lg fade-in-up"
+                    style="animation-delay: 0.7s;">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-running text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Energy Level</h3>
+                    <p class="text-gray-600">High energy requiring 1-2 hours of vigorous exercise daily. Thrives with
+                        space to run and a job to do. Excellent for active families and working homes.</p>
+                </div>
+
+                <div class="characteristic-card bg-white p-6 rounded-lg shadow-lg fade-in-up"
+                    style="animation-delay: 0.8s;">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Intelligence</h3>
+                    <p class="text-gray-600">Highly intelligent with excellent problem-solving abilities. Independent
+                        thinker that requires experienced handling and consistent, positive training methods.</p>
+                </div>
+
+                <div class="characteristic-card bg-white p-6 rounded-lg shadow-lg fade-in-up"
+                    style="animation-delay: 0.9s;">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-home text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Living Environment</h3>
+                    <p class="text-gray-600">Best suited for homes with securely fenced yards. Not recommended for
+                        apartments due to high energy and exercise needs. Thrives in country settings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Working Abilities -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in-up">
+                    <img src="https://kimi-web-img.moonshot.cn/img/beardogs.org/ac072fc26e17b7a96192c5080985db135f9cab4b.jpg"
+                        alt="Karelian Bear Dog Working" class="w-full h-96 object-cover breed-image">
+                </div>
+                <div class="fade-in-up" style="animation-delay: 0.2s;">
+                    <h2 class="text-4xl font-display font-bold mb-6">Exceptional Working Abilities</h2>
+                    <p class="text-gray-600 mb-6">
+                        The Karelian Bear Dog is renowned for its fearless nature and remarkable hunting capabilities.
+                        Bred to hunt large and sometimes dangerous game, these dogs possess an unyielding bravery that
+                        allows them to corner bears, moose, wolves, and lynx without hesitation.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-orange-600 text-sm"></i>
+                            </div>
+                            <p class="text-gray-600">Silent hunters who bark only when they've located and cornered
+                                their quarry</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-orange-600 text-sm"></i>
+                            </div>
+                            <p class="text-gray-600">Excellent sense of direction and keen sense of smell for tracking
+                            </p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-orange-600 text-sm"></i>
+                            </div>
+                            <p class="text-gray-600">Used by wildlife agencies for non-lethal bear management in
+                                national parks</p>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-orange-600 text-sm"></i>
+                            </div>
+                            <p class="text-gray-600">Works independently yet cooperatively with their human handler</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health & Care -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Health & Care
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Understanding the health considerations and care requirements for Karelian Bear Dogs.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="fade-in-up" style="animation-delay: 0.4s;">
+                    <h3 class="text-2xl font-display font-bold mb-6">Health Considerations</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-800 mb-2">Generally Healthy Breed</h4>
+                            <p class="text-gray-600">Karelian Bear Dogs are relatively healthy with fewer genetic issues
+                                compared to many purebred dogs. Responsible breeding practices help maintain this
+                                advantage.</p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-800 mb-2">Common Concerns</h4>
+                            <p class="text-gray-600">May be susceptible to hip dysplasia, elbow dysplasia, and eye
+                                problems. Regular veterinary check-ups and health screenings are essential.</p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-800 mb-2">Lifespan</h4>
+                            <p class="text-gray-600">Average lifespan of 10-13 years with proper care, nutrition, and
+                                regular exercise.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.6s;">
+                    <h3 class="text-2xl font-display font-bold mb-6">Care Requirements</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-800 mb-2">Exercise Needs</h4>
+                            <p class="text-gray-600">Requires 1-2 hours of vigorous exercise daily including long walks,
+                                running, hiking, or engaging dog sports like agility and rally.</p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-800 mb-2">Grooming</h4>
+                            <p class="text-gray-600">Weekly brushing to remove loose fur and prevent matting. Occasional
+                                baths, regular nail trimming, and dental care are important.</p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-800 mb-2">Training & Socialization</h4>
+                            <p class="text-gray-600">Early socialization and consistent, positive training are crucial.
+                                Best suited for experienced dog owners who can provide strong leadership.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Is This Breed Right for You? -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Is a Karelian Bear Dog Right for You?
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="fade-in-up" style="animation-delay: 0.4s;">
+                    <h3 class="text-2xl font-display font-bold mb-6 text-green-600">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Good Match If You:
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Are an experienced dog owner</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Have a securely fenced yard</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Lead an active lifestyle</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Want a loyal, protective companion</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Can provide daily vigorous exercise</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Are committed to ongoing training</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.6s;">
+                    <h3 class="text-2xl font-display font-bold mb-6 text-red-600">
+                        <i class="fas fa-times-circle mr-2"></i>
+                        May Not Be Ideal If You:
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Are a first-time dog owner</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Live in an apartment</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Have small children</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Have other pets</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Have limited time for exercise</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times text-red-600 mr-3 mt-1"></i>
+                            <span class="text-gray-600">Prefer a low-maintenance breed</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in-up" style="animation-delay: 0.8s;">
+                <a href="contact.html" class="btn-primary">
+                    <i class="fas fa-comments mr-2"></i>
+                    Discuss If This Breed Is Right For You
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
+                        breed preservation.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>info@kamikennels.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>

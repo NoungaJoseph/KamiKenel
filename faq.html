@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Kami Kennels</title>
+    <meta name="description"
+        content="Frequently asked questions about Karelian Bear Dogs, our breeding program, and the adoption process at Kami Kennels.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            background: white;
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f9fafb;
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 24px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                padding-top: 50px;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
+                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Frequently Asked Questions
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Find answers to common questions about Karelian Bear Dogs, our breeding program, and the adoption
+                    process.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+
+                <!-- General Questions -->
+                <div class="category-section fade-in-up">
+                    <div class="category-title">
+                        <h2 class="text-3xl font-display font-bold text-gray-800">General Questions</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is a Karelian Bear Dog?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The Karelian Bear Dog is an ancient breed from Northwestern Europe, specifically the
+                                Karelian region of Finland and Russia. They are medium-sized spitz-type dogs known for
+                                their courage, loyalty, and exceptional hunting abilities. Originally bred to hunt large
+                                game including bears, moose, wolves, and lynx, they are fearless, intelligent, and make
+                                excellent working dogs and family companions when properly trained.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How big do Karelian Bear Dogs get?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Males typically stand 21-24 inches tall at the shoulder and weigh 55-61 pounds. Females
+                                are slightly smaller, measuring 19-22 inches in height and weighing 37-44 pounds. They
+                                have a robust, muscular build that is strong without being heavy, with males being
+                                noticeably larger than females.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is their temperament like?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs have a courageous, persistent, and self-confident temperament. They
+                                are highly devoted to their families and make excellent guard dogs, being naturally wary
+                                of strangers. They are intelligent and independent thinkers, which can make training
+                                challenging for inexperienced owners. With proper socialization, they are stable and
+                                reliable companions who are never aggressive toward people but will protect their family
+                                when necessary.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Are they good with children?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs can be good with children, especially when raised with them from
+                                puppyhood. They are generally patient and protective of family members. However, due to
+                                their high energy levels and strong prey drive, they may play too roughly with small
+                                children. We recommend them for families with older children who understand how to
+                                interact respectfully with dogs. Early socialization and training are essential for
+                                creating a safe environment for both children and the dog.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health & Care -->
+                <div class="category-section fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="category-title">
+                        <h2 class="text-3xl font-display font-bold text-gray-800">Health & Care</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What health issues are common in Karelian Bear Dogs?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs are generally a healthy breed with fewer genetic issues than many
+                                purebred dogs. However, they can be susceptible to certain conditions including hip
+                                dysplasia, elbow dysplasia, eye problems like cataracts, and dental issues. Responsible
+                                breeding practices, including health testing of parent dogs, helps minimize these risks.
+                                Regular veterinary check-ups, proper nutrition, and maintaining a healthy weight are
+                                important for preventing health problems.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long do Karelian Bear Dogs live?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The average lifespan of a Karelian Bear Dog is 10-13 years with proper care. Factors that
+                                contribute to longevity include quality nutrition, regular exercise, routine veterinary
+                                care, and maintaining a healthy weight. Dogs from responsible breeders who perform
+                                health testing on parent dogs typically have better long-term health outcomes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How much exercise do they need?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs are high-energy dogs that require 1-2 hours of vigorous exercise
+                                daily. This should include long walks, running, hiking, or engaging activities like
+                                agility training. They excel when they have a job to do and need both physical and
+                                mental stimulation. Without adequate exercise, they can become destructive or develop
+                                behavioral problems. They are not suitable for sedentary families or apartment living.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What should I feed my Karelian Bear Dog?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Feed your Karelian Bear Dog high-quality dog food appropriate for their age, size, and
+                                activity level. As an active, working breed, they may benefit from performance or active
+                                breed formulas that provide adequate protein and energy. Feed measured meals twice daily
+                                rather than free-feeding to maintain a healthy weight. Always provide fresh water.
+                                Consult with your veterinarian about specific nutritional needs, especially for growing
+                                puppies and senior dogs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How much grooming do they require?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs have a dense double coat that requires weekly brushing to remove loose
+                                fur and prevent matting. They shed moderately year-round with heavier shedding during
+                                seasonal changes. During shedding periods, more frequent brushing may be needed. They
+                                only need occasional baths unless they get particularly dirty. Regular nail trimming,
+                                ear cleaning, and dental care are also important parts of their grooming routine.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training & Behavior -->
+                <div class="category-section fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="category-title">
+                        <h2 class="text-3xl font-display font-bold text-gray-800">Training & Behavior</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Are Karelian Bear Dogs easy to train?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs are intelligent and capable of learning quickly, but they can be
+                                challenging to train due to their independent nature. They are not recommended for
+                                first-time dog owners. Training requires consistency, patience, and positive
+                                reinforcement methods. They respond best to confident handlers who can provide strong
+                                leadership without harsh punishment. Early socialization and puppy training classes are
+                                essential for developing good behavior.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do they get along with other pets?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs typically do not get along well with other pets, especially smaller
+                                animals, due to their strong prey drive. They can be aggressive toward other dogs,
+                                particularly those of the same sex. While some individuals can learn to coexist with
+                                other pets if raised together from puppyhood, they generally do best as the only pet in
+                                the household. Early socialization is crucial, but their natural instincts may still
+                                create challenges in multi-pet homes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How much do they bark?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs are naturally vocal and were bred to bark when they locate game. They
+                                tend to bark at anything they're unsure of, including unfamiliar people and animals.
+                                This makes them excellent watchdogs but can be problematic in urban or suburban
+                                settings. Training can help manage excessive barking, but it's important to understand
+                                that barking is a natural behavior for this breed. They're best suited for rural or
+                                country settings where their vocal nature is less likely to cause issues.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can they be left alone during the day?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Karelian Bear Dogs form strong bonds with their families and prefer not to be left alone
+                                for long periods. They can develop separation anxiety or destructive behaviors if left
+                                alone too frequently. While adult dogs can handle being alone for reasonable periods
+                                (4-6 hours) if properly exercised and mentally stimulated, they thrive in homes where
+                                someone is present most of the day. They're not suited for families with long work hours
+                                unless arrangements can be made for exercise and companionship.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Breeding Program -->
+                <div class="category-section fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="category-title">
+                        <h2 class="text-3xl font-display font-bold text-gray-800">Our Breeding Program</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long have you been breeding Karelian Bear Dogs?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kami Kennels has been dedicated to breeding exceptional Karelian Bear Dogs for over 15
+                                years. Our experience spans multiple generations of dogs, allowing us to develop a deep
+                                understanding of the breed's characteristics, health considerations, and temperament
+                                traits. We work closely with other reputable breeders and breed organizations to
+                                maintain the highest standards in our breeding program.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What health testing do you do on parent dogs?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>All our breeding dogs undergo comprehensive health testing before being included in our
+                                program. This includes hip and elbow dysplasia screening through OFA or PennHIP, eye
+                                examinations by a veterinary ophthalmologist, and genetic testing for known hereditary
+                                conditions. We also conduct general health screenings and ensure all breeding dogs are
+                                up to date on vaccinations and preventive care. All test results are available to
+                                prospective puppy buyers.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do you socialize your puppies?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our puppies receive extensive socialization from birth through adoption. They're raised
+                                in our home environment where they experience normal household sounds, activities, and
+                                interactions. We follow the Puppy Culture program, which includes early neurological
+                                stimulation, problem-solving exercises, and exposure to various surfaces, sounds, and
+                                experiences. Puppies interact with people of all ages, other dogs, and are introduced to
+                                different environments to build confidence and adaptability.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What comes with your puppies?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>All our puppies come with a comprehensive package including: AKC registration papers,
+                                complete health records with vaccination and deworming history, a 2-year health
+                                guarantee against genetic defects, a starter supply of high-quality puppy food, a
+                                comfort blanket with mother's scent, basic training materials, and lifetime support from
+                                our team. We also provide detailed care instructions and are always available for
+                                questions and guidance throughout your dog's life.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer health guarantees?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we provide a comprehensive 2-year health guarantee covering genetic and congenital
+                                defects. If a puppy develops a covered health issue, we will work with you to find the
+                                best solution, which may include replacement or refund depending on the circumstances.
+                                This guarantee demonstrates our commitment to producing healthy puppies and our
+                                confidence in our breeding program. We also require that puppies receive regular
+                                veterinary care to maintain the guarantee.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adoption Process -->
+                <div class="category-section fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="category-title">
+                        <h2 class="text-3xl font-display font-bold text-gray-800">Adoption Process</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I reserve a puppy?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>To reserve a puppy, you first need to complete our adoption application and be approved.
+                                Once approved, we require a deposit to hold your chosen puppy. Deposits are typically
+                                $500 and are applied toward the total purchase price. We maintain a waiting list for
+                                upcoming litters, and deposits are placed in order of receipt. All deposits are
+                                refundable if we cannot provide a puppy within a reasonable timeframe or if the chosen
+                                puppy doesn't pass our health screening.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is your adoption application process?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our adoption process includes: 1) Initial contact to discuss your interest and
+                                experience, 2) Completion of our detailed application covering your living situation,
+                                dog experience, and plans for the puppy, 3) Reference checks including your
+                                veterinarian, 4) Phone or in-person interview, 5) Home visit if feasible, 6) Approval
+                                and puppy selection. This thorough process ensures our puppies go to appropriate homes
+                                and helps us match the right puppy with the right family.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I visit your facility?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we welcome visits from serious, pre-approved prospective buyers. Due to biosecurity
+                                concerns and to minimize stress on our dogs, we don't allow casual visits. Approved
+                                visitors can meet our adult dogs, see our facilities, and interact with available
+                                puppies. We also conduct virtual meetings and provide extensive photos and videos for
+                                those who cannot visit in person. All visits are by appointment only and follow strict
+                                protocols to protect the health of our dogs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you ship puppies?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We prefer that families pick up their puppies in person to ensure a good match and
+                                provide proper transition guidance. However, we understand that distance can be a
+                                challenge and will work with approved families to arrange transportation. We can
+                                recommend professional pet transport services or arrange for puppies to be flown with a
+                                companion. All shipping costs are the responsibility of the buyer, and we ensure all
+                                travel arrangements prioritize the puppy's safety and comfort.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What if I can no longer care for my dog?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We require in our contract that if you cannot keep your dog for any reason, you must
+                                return it to us. We will take back any dog we've bred at any point in their life,
+                                regardless of the reason. We then work to find a new, appropriate home for the dog. This
+                                lifetime commitment ensures that none of our puppies ever end up in shelters or
+                                inappropriate situations. We also provide support and resources to help families work
+                                through challenges before considering rehoming.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing & Availability -->
+                <div class="category-section fade-in-up" style="animation-delay: 1.0s;">
+                    <div class="category-title">
+                        <h2 class="text-3xl font-display font-bold text-gray-800">Pricing & Availability</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How much do your puppies cost?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our puppy prices typically range from $2,500 to $3,500 depending on the specific litter,
+                                parentage, and individual puppy qualities. Show-quality puppies or those with
+                                exceptional markings may be priced higher. This price includes all health testing,
+                                vaccinations, microchipping, registration papers, health guarantee, and lifetime
+                                support. We require a $500 deposit to reserve a puppy, with the balance due at pickup.
+                                Payment plans may be available for qualified buyers.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>When will you have puppies available?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We typically have 2-3 litters per year, with puppies available in spring, summer, and
+                                fall. Our breeding schedule is planned carefully to ensure the health of our mothers and
+                                quality of each litter. We maintain a waiting list for interested families and announce
+                                upcoming litters to those on our list first. The best way to stay informed about
+                                availability is to join our waiting list and follow our website and social media for
+                                updates.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer payment plans?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We understand that purchasing a quality purebred dog is a significant investment. For
+                                qualified, approved buyers, we may offer payment plans with reasonable terms. Typically,
+                                this involves a deposit to reserve the puppy, followed by monthly payments until the
+                                puppy is ready to go home. The full balance must be paid before the puppy leaves our
+                                facility. We work with each family individually to find arrangements that work within
+                                their budget while ensuring our puppies go to stable, prepared homes.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                Still Have Questions?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8 fade-in-up" style="animation-delay: 0.2s;">
+                Don't see your question answered here? We're happy to provide more information about our breeding
+                program and Karelian Bear Dogs.
+            </p>
+            <div class="fade-in-up" style="animation-delay: 0.4s;">
+                <a href="contact.html" class="btn-primary">
+                    <i class="fas fa-comments mr-2"></i>
+                    Contact Us Directly
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
+                        breed preservation.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>info@kamikennels.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>

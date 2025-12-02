@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Kami Kennels</title>
+    <meta name="description"
+        content="Latest news, success stories, and expert advice about Karelian Bear Dogs from Kami Kennels. Stay updated with our breeding program and adoptions.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .blog-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .category-tag {
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                padding-top: 50px;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
+                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Kami Kennels Blog
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Stay updated with the latest news, success stories, training tips, and expert advice about Karelian
+                    Bear Dogs from our experienced team.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="blog-card bg-white shadow-lg overflow-hidden fade-in-up">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://kimi-web-img.moonshot.cn/img/beardogs.org/ac072fc26e17b7a96192c5080985db135f9cab4b.jpg"
+                                alt="Featured Post" class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <div class="category-tag mb-4">News</div>
+                            <h2 class="text-3xl font-display font-bold mb-4">New Litter Arrives: Meet Our Latest
+                                Karelian Bear Dog Puppies</h2>
+                            <p class="text-gray-600 mb-6">
+                                We're excited to announce the arrival of our newest litter of Karelian Bear Dog puppies!
+                                This exceptional litter of 12 puppies showcases the finest qualities of the breed, with
+                                excellent markings, robust health, and the characteristic fearless temperament that
+                                makes these dogs so special.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-calendar mr-2"></i>
+                                    November 15, 2024
+                                </div>
+                                <a href="#" class="btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Posts -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Recent Posts
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Latest updates, training tips, and insights about Karelian Bear Dogs.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Post 1 -->
+                <div class="blog-card bg-white shadow-lg fade-in-up" style="animation-delay: 0.4s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/www.akc.org/b2713d5593c6fd7cf6e29fa53c0015a3a6812853.jpg"
+                        alt="Training Tips" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="category-tag mb-3">Training</div>
+                        <h3 class="text-xl font-display font-bold mb-3">Essential Training Tips for Karelian Bear Dog
+                            Puppies</h3>
+                        <p class="text-gray-600 mb-4">Learn the fundamentals of training your Karelian Bear Dog puppy,
+                            from basic obedience to advanced hunting skills...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-2"></i>November 10, 2024</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 2 -->
+                <div class="blog-card bg-white shadow-lg fade-in-up" style="animation-delay: 0.5s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/dogacademy.org/14830ccea79d1b85d2068844eceed8b4704e940b.jpg"
+                        alt="Health Care" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="category-tag mb-3">Health</div>
+                        <h3 class="text-xl font-display font-bold mb-3">Health Care Guide for Karelian Bear Dogs</h3>
+                        <p class="text-gray-600 mb-4">Comprehensive guide to maintaining your Karelian Bear Dog's
+                            health, from puppyhood through senior years...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-2"></i>November 5, 2024</span>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 3 -->
+                <div class="blog-card bg-white shadow-lg fade-in-up" style="animation-delay: 0.6s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/doglime.com/664ac4ce7cf2213052680e3f654ee45fbd11f8c5.jpg"
+                        alt="Breed History" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="category-tag mb-3">History</div>
+                        <h3 class="text-xl font-display font-bold mb-3">The Rich History of Karelian Bear Dogs</h3>
+                        <p class="text-gray-600 mb-4">Explore the fascinating 2,000-year history of this ancient breed,
+                            from Viking hunting companions to modern working dogs...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-2"></i>October 28, 2024</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 4 -->
+                <div class="blog-card bg-white shadow-lg fade-in-up" style="animation-delay: 0.7s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/consumer-cms.petfinder.com/27c1b0acd3f38b424fb058f40b142ad7e38dc457.jpg"
+                        alt="Working Dogs" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="category-tag mb-3">Working Dogs</div>
+                        <h3 class="text-xl font-display font-bold mb-3">Karelian Bear Dogs in Modern Working Roles</h3>
+                        <p class="text-gray-600 mb-4">Discover how Karelian Bear Dogs are used today in wildlife
+                            management, search and rescue, and as family guardians...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-2"></i>October 20, 2024</span>
+                            <span>7 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 5 -->
+                <div class="blog-card bg-white shadow-lg fade-in-up" style="animation-delay: 0.8s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.agroinform.com/940fa0b97c3163421b7b96201551b8bd5211db2c.jpg"
+                        alt="Nutrition" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="category-tag mb-3">Nutrition</div>
+                        <h3 class="text-xl font-display font-bold mb-3">Feeding Your Karelian Bear Dog: Complete
+                            Nutrition Guide</h3>
+                        <p class="text-gray-600 mb-4">Everything you need to know about feeding your Karelian Bear Dog,
+                            from puppy nutrition to senior diet requirements...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-2"></i>October 15, 2024</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 6 -->
+                <div class="blog-card bg-white shadow-lg fade-in-up" style="animation-delay: 0.9s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i.pinimg.com/44ff073dca9d7a23b526c5776711ef8d5a01411d.jpg"
+                        alt="Grooming" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="category-tag mb-3">Care</div>
+                        <h3 class="text-xl font-display font-bold mb-3">Grooming and Coat Care for Karelian Bear Dogs
+                        </h3>
+                        <p class="text-gray-600 mb-4">Learn how to properly care for your Karelian Bear Dog's
+                            distinctive double coat and maintain their natural beauty...</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-2"></i>October 8, 2024</span>
+                            <span>4 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Success Stories
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Heartwarming stories from families who have welcomed Kami Kennels puppies into their homes.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Success Story 1 -->
+                <div class="success-story p-8 rounded-lg fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="flex items-start mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.squarespace-cdn.com/35feead52abe6c105dbf5a951fc7adbf6609cab6.jpeg"
+                            alt="Happy Family" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-display font-bold">The Johnson Family</h3>
+                            <p class="text-gray-600">Colorado, USA</p>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "We adopted our Karelian Bear Dog, Koda, from Kami Kennels two years ago, and he has been an
+                        incredible addition to our family. His intelligence, loyalty, and protective nature are exactly
+                        what we were looking for. The training support we received was invaluable."
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <strong>Koda:</strong> 2 years old, adopted from our 2022 litter
+                    </p>
+                </div>
+
+                <!-- Success Story 2 -->
+                <div class="success-story p-8 rounded-lg fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="flex items-start mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/rockinjc.com/280da16f11c4c1e39ece8195d32fa4cf503f6c37.jpeg"
+                            alt="Hunting Dog" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-display font-bold">Mark Thompson</h3>
+                            <p class="text-gray-600">Ontario, Canada</p>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "As a hunting guide, I needed a dog with exceptional tracking abilities and courage. Björn from
+                        Kami Kennels has exceeded all expectations. His ability to track and corner game is remarkable,
+                        and his loyalty is unmatched."
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <strong>Björn:</strong> 3 years old, working hunting dog
+                    </p>
+                </div>
+
+                <!-- Success Story 3 -->
+                <div class="success-story p-8 rounded-lg fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="flex items-start mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/s3-media0.fl.yelpcdn.com/a7bc6aa98134b5e13fd2d5dda3bff4060e7e8928.jpg"
+                            alt="Family Pet" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-display font-bold">Sarah Mitchell</h3>
+                            <p class="text-gray-600">Finland</p>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "Aino has been the perfect family guardian. She's gentle with our children but fiercely
+                        protective when strangers approach. The health guarantee and ongoing support from Kami Kennels
+                        gave us confidence in our choice."
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <strong>Aino:</strong> 1.5 years old, family companion
+                    </p>
+                </div>
+
+                <!-- Success Story 4 -->
+                <div class="success-story p-8 rounded-lg fade-in-up" style="animation-delay: 1.0s;">
+                    <div class="flex items-start mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/i.pinimg.com/e3fcf0c970161d8c99b751d1ec25b6fa285f88f1.jpg"
+                            alt="Working Dog" class="w-20 h-20 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-display font-bold">David Chen</h3>
+                            <p class="text-gray-600">British Columbia, Canada</p>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "We run a wilderness lodge and needed a dog that could handle the harsh conditions while being
+                        great with guests. Sisu from Kami Kennels has been perfect - tough, reliable, and friendly with
+                        everyone he meets."
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <strong>Sisu:</strong> 4 years old, wilderness lodge guardian
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="py-20 bg-gray-800 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 fade-in-up">
+                Stay Updated
+            </h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                Subscribe to our newsletter for the latest news, training tips, and available puppies.
+            </p>
+
+
+            <form class="max-w-md mx-auto fade-in-up" style="animation-delay: 0.4s;"
+                action="https://formspree.io/f/xovoornv" method="POST">
+                <div class="flex">
+                    <input type="email" name="email" placeholder="Enter your email"
+                        class="flex-1 px-4 py-3 rounded-l-lg text-gray-800" required>
+                    <button type="submit" class="btn-primary rounded-l-none">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Subscribe
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
+                        breed preservation.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>info@kamikennels.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>

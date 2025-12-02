@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kami Kennels - Premium Karelian Bear Dog Breeding</title>
+    <meta name="description"
+        content="Kami Kennels - Premier Karelian Bear Dog breeding facility. Beautiful, healthy puppies with excellent temperament and pedigree.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('resources/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 28px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-left.fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-right.fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .puppy-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .puppy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .puppy-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .puppy-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-success {
+            background: #27ae60;
+        }
+
+        .notification-error {
+            background: #e74c3c;
+        }
+
+        .adoption-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .adoption-form input,
+        .adoption-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .adoption-form textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                background-attachment: scroll;
+                text-align: center;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                padding-top: 50px;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
+                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 fade-in-up">
+                    Premium Karelian Bear Dog Breeding
+                </h1>
+                <p class="text-xl md:text-2xl text-white mb-8 leading-relaxed fade-in-up"
+                    style="animation-delay: 0.2s;">
+                    Exceptional puppies with champion bloodlines, excellent temperament, and the fearless spirit that
+                    makes this breed extraordinary.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 fade-in-up" style="animation-delay: 0.4s;">
+                    <a href="puppies.html" class="btn-primary text-center">
+                        <i class="fas fa-heart mr-2"></i>
+                        View Available Puppies
+                    </a>
+                    <a href="about.html" class="btn-secondary text-center">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Learn About the Breed
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Our Mission
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    At Kami Kennels, we are dedicated to preserving and enhancing the exceptional qualities of the
+                    Karelian Bear Dog breed through responsible breeding practices, comprehensive health testing, and
+                    meticulous care for our dogs.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Health & Quality</h3>
+                    <p class="text-gray-600">Comprehensive health testing and genetic screening to ensure the highest
+                        quality puppies with excellent long-term health.</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Temperament Focus</h3>
+                    <p class="text-gray-600">Careful selection and socialization to produce puppies with stable,
+                        confident temperaments suitable for family companionship.</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-graduation-cap text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Lifetime Support</h3>
+                    <p class="text-gray-600">Ongoing guidance and support for our puppy families throughout their dog's
+                        life, from training advice to health consultations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Puppies Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Featured Puppies
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Meet some of our currently available Karelian Bear Dog puppies, each with their own unique
+                    personality and charm.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="puppy-card bg-white rounded-lg shadow-lg overflow-hidden fade-in-up"
+                    style="animation-delay: 0.4s;" data-puppy-name="Björn">
+                    <img src="https://kimi-web-img.moonshot.cn/img/doglime.com/664ac4ce7cf2213052680e3f654ee45fbd11f8c5.jpg"
+                        alt="Björn - Karelian Bear Dog Puppy" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-display font-bold mb-2">Björn</h3>
+                        <p class="text-gray-600 mb-2"><strong>Age:</strong> 10 weeks</p>
+                        <p class="text-gray-600 mb-4">Confident and playful male with excellent markings. Shows strong
+                            hunting instincts and loves to explore. Great with children and very social.</p>
+                        <button class="adopt-btn btn-primary w-full">
+                            <i class="fas fa-heart mr-2"></i>
+                            Contact to Adopt
+                        </button>
+                    </div>
+                </div>
+
+                <div class="puppy-card bg-white rounded-lg shadow-lg overflow-hidden fade-in-up"
+                    style="animation-delay: 0.6s;" data-puppy-name="Aino">
+                    <img src="https://kimi-web-img.moonshot.cn/img/consumer-cms.petfinder.com/27c1b0acd3f38b424fb058f40b142ad7e38dc457.jpg"
+                        alt="Aino - Karelian Bear Dog Puppy" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-display font-bold mb-2">Aino</h3>
+                        <p class="text-gray-600 mb-2"><strong>Age:</strong> 12 weeks</p>
+                        <p class="text-gray-600 mb-4">Sweet and intelligent female with a gentle disposition. Very
+                            attentive and eager to please. Perfect for a family looking for a loyal companion.</p>
+                        <button class="adopt-btn btn-primary w-full">
+                            <i class="fas fa-heart mr-2"></i>
+                            Contact to Adopt
+                        </button>
+                    </div>
+                </div>
+
+                <div class="puppy-card bg-white rounded-lg shadow-lg overflow-hidden fade-in-up"
+                    style="animation-delay: 0.8s;" data-puppy-name="Sisu">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.agroinform.com/940fa0b97c3163421b7b96201551b8bd5211db2c.jpg"
+                        alt="Sisu - Karelian Bear Dog Puppy" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-display font-bold mb-2">Sisu</h3>
+                        <p class="text-gray-600 mb-2"><strong>Age:</strong> 9 weeks</p>
+                        <p class="text-gray-600 mb-4">Bold and energetic male with exceptional markings. Very curious
+                            and intelligent, showing great promise for both hunting and companionship.</p>
+                        <button class="adopt-btn btn-primary w-full">
+                            <i class="fas fa-heart mr-2"></i>
+                            Contact to Adopt
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="puppies.html" class="btn-primary">
+                    <i class="fas fa-paw mr-2"></i>
+                    View All Available Puppies
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section py-20 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="fade-in-up">
+                    <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="15">0</div>
+                    <p class="text-lg">Years of Experience</p>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="120">0</div>
+                    <p class="text-lg">Puppies Placed</p>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="98">0</div>
+                    <p class="text-lg">% Health Success Rate</p>
+                </div>
+
+                <div class="fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="3">0</div>
+                    <p class="text-lg">Countries Served</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                Ready to Welcome a Karelian Bear Dog?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8 fade-in-up" style="animation-delay: 0.2s;">
+                Contact us today to learn more about our available puppies and adoption process. We're here to help you
+                find the perfect companion for your family.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in-up" style="animation-delay: 0.4s;">
+                <a href="contact.html" class="btn-primary">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Contact Us
+                </a>
+                <a href="faq.html" class="btn-secondary">
+                    <i class="fas fa-question-circle mr-2"></i>
+                    Read FAQ
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
+                        breed preservation.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a>
+                        </li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>info@kamikennels.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>

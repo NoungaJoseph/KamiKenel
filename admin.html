@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Kami Kennels</title>
+    <meta name="description" content="Kami Kennels Admin Panel - Manage puppies, bookings, and website content">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- API Helper -->
+    <script src="api.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: #f8f9fa;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .login-container {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .admin-sidebar {
+            background: var(--primary-color);
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            padding: 20px;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+
+        .admin-main.expanded {
+            margin-left: 0;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .sidebar-toggle:hover {
+            background: #d35400;
+            transform: scale(1.1);
+        }
+
+        .sidebar-toggle.shifted {
+            left: 270px;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .sidebar-nav i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .btn-admin {
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-admin:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+        }
+
+        .btn-admin-secondary {
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-admin-secondary:hover {
+            background: #2980b9;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .admin-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-reserved {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-sold {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .admin-sidebar.active {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .mobile-toggle {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="text-center mb-8">
+                <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-16 w-auto mx-auto mb-4">
+                <h1 class="text-3xl font-display font-bold text-gray-800">Kami Kennels</h1>
+                <p class="text-gray-600">Admin Panel</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="btn-admin w-full">
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Login
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600">
+                    Demo credentials: admin / password123
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden">
+        <!-- Sidebar Toggle Button -->
+        <button class="sidebar-toggle shifted" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="p-6 border-b border-gray-600">
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto">
+                    <div class="ml-3">
+                        <h2 class="text-lg font-bold">Kami Kennels</h2>
+                        <p class="text-sm text-gray-300">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li><a href="#" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>Dashboard
+                    </a></li>
+                <li><a href="#" class="nav-link" data-section="puppies">
+                        <i class="fas fa-paw"></i>Puppy Management
+                    </a></li>
+                <li><a href="#" class="nav-link" data-section="bookings">
+                        <i class="fas fa-calendar-check"></i>Bookings
+                    </a></li>
+                <li><a href="#" class="nav-link" data-section="content">
+                        <i class="fas fa-edit"></i>Content Management
+                    </a></li>
+                <li><a href="#" class="nav-link" data-section="users">
+                        <i class="fas fa-users"></i>User Management
+                    </a></li>
+                <li><a href="#" class="nav-link" data-section="analytics">
+                        <i class="fas fa-chart-bar"></i>Analytics
+                    </a></li>
+                <li><a href="#" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>Settings
+                    </a></li>
+                <li><a href="#" class="nav-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>Logout
+                    </a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Header -->
+            <div class="admin-header">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold">Welcome Back, Admin</h1>
+                        <p class="text-gray-600">Here's what's happening with your kennel today</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="btn-admin-secondary">
+                            <i class="fas fa-bell mr-2"></i>
+                            Notifications
+                        </button>
+                        <button class="btn-admin-secondary">
+                            <i class="fas fa-cog mr-2"></i>
+                            Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboardSection" class="admin-section">
+                <!-- Stats Cards -->
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <p class="text-gray-600">Available Puppies</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <p class="text-gray-600">Pending Bookings</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">156</div>
+                        <p class="text-gray-600">Total Puppies Sold</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <p class="text-gray-600">Health Success Rate</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-clock mr-2 text-orange-600"></i>
+                            Recent Activity
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <i class="fas fa-user-plus text-green-600 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold">New booking request</p>
+                                    <p class="text-sm text-gray-600">Björn - 2 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <i class="fas fa-paw text-blue-600 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold">Puppy profile updated</p>
+                                    <p class="text-sm text-gray-600">Aino - 4 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <i class="fas fa-envelope text-orange-600 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold">New contact form</p>
+                                    <p class="text-sm text-gray-600">General inquiry - 6 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-chart-line mr-2 text-orange-600"></i>
+                            Quick Stats
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span>This Month's Sales</span>
+                                <span class="font-bold text-green-600">$45,600</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Website Visitors</span>
+                                <span class="font-bold text-blue-600">1,234</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Conversion Rate</span>
+                                <span class="font-bold text-purple-600">12.5%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Average Rating</span>
+                                <span class="font-bold text-yellow-600">4.9/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Puppy Management Section -->
+            <div id="puppiesSection" class="admin-section hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Puppy Management</h2>
+                    <button class="btn-admin" onclick="openAddPuppyModal()">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add New Puppy
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="puppiesTableBody">
+                            <tr>
+                                <td><img src="https://kimi-web-img.moonshot.cn/img/doglime.com/664ac4ce7cf2213052680e3f654ee45fbd11f8c5.jpg"
+                                        alt="Björn" class="w-12 h-12 object-cover rounded-full"></td>
+                                <td><strong>Björn</strong></td>
+                                <td>Male</td>
+                                <td>10 weeks</td>
+                                <td><span class="status-badge status-available">Available</span></td>
+                                <td>$2,800</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2" onclick="editPuppy('bjorn')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary" onclick="deletePuppy('bjorn')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://kimi-web-img.moonshot.cn/img/consumer-cms.petfinder.com/27c1b0acd3f38b424fb058f40b142ad7e38dc457.jpg"
+                                        alt="Aino" class="w-12 h-12 object-cover rounded-full"></td>
+                                <td><strong>Aino</strong></td>
+                                <td>Female</td>
+                                <td>12 weeks</td>
+                                <td><span class="status-badge status-available">Available</span></td>
+                                <td>$2,600</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2" onclick="editPuppy('aino')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary" onclick="deletePuppy('aino')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://kimi-web-img.moonshot.cn/img/rockinjc.com/280da16f11c4c1e39ece8195d32fa4cf503f6c37.jpeg"
+                                        alt="Helmi" class="w-12 h-12 object-cover rounded-full"></td>
+                                <td><strong>Helmi</strong></td>
+                                <td>Female</td>
+                                <td>11 weeks</td>
+                                <td><span class="status-badge status-reserved">Reserved</span></td>
+                                <td>$2,700</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2" onclick="editPuppy('helmi')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary" onclick="deletePuppy('helmi')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bookings Section -->
+            <div id="bookingsSection" class="admin-section hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Booking Management</h2>
+                    <div class="flex space-x-2">
+                        <button class="btn-admin-secondary">Filter by Status</button>
+                        <button class="btn-admin-secondary">Export Data</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Puppy</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <tr>
+                                <td>#BK001</td>
+                                <td><strong>John Smith</strong><br><small>john@email.com</small></td>
+                                <td>Björn</td>
+                                <td>United States</td>
+                                <td><span class="status-badge status-available">New</span></td>
+                                <td>2024-11-30</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2" onclick="viewBooking('bk001')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary mr-2" onclick="approveBooking('bk001')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary" onclick="deleteBooking('bk001')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK002</td>
+                                <td><strong>Sarah Johnson</strong><br><small>sarah@email.com</small></td>
+                                <td>Aino</td>
+                                <td>Canada</td>
+                                <td><span class="status-badge status-reserved">In Review</span></td>
+                                <td>2024-11-29</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2" onclick="viewBooking('bk002')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary mr-2" onclick="approveBooking('bk002')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary" onclick="deleteBooking('bk002')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Content Management Section -->
+            <div id="contentSection" class="admin-section hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Content Management</h2>
+                    <button class="btn-admin">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add New Content
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-blog text-4xl text-orange-600 mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2">Blog Posts</h3>
+                        <p class="text-3xl font-bold text-orange-600 mb-3">24</p>
+                        <button class="btn-admin-secondary">Manage Posts</button>
+                    </div>
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-question-circle text-4xl text-blue-600 mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2">FAQ Entries</h3>
+                        <p class="text-3xl font-bold text-blue-600 mb-3">18</p>
+                        <button class="btn-admin-secondary">Manage FAQs</button>
+                    </div>
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-file-alt text-4xl text-green-600 mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2">Pages</h3>
+                        <p class="text-3xl font-bold text-green-600 mb-3">7</p>
+                        <button class="btn-admin-secondary">Manage Pages</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Last Modified</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Karelian Bear Dog Training Tips</strong></td>
+                                <td>Blog Post</td>
+                                <td><span class="status-badge status-available">Published</span></td>
+                                <td>2024-11-25</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>How much does a puppy cost?</strong></td>
+                                <td>FAQ</td>
+                                <td><span class="status-badge status-available">Published</span></td>
+                                <td>2024-11-20</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- User Management Section -->
+            <div id="usersSection" class="admin-section hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">User Management</h2>
+                    <button class="btn-admin">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Add New User
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <p class="text-gray-600">Admin Users</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">156</div>
+                        <p class="text-gray-600">Customers</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <p class="text-gray-600">Active This Month</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Admin User</strong></td>
+                                <td>admin@kamikennels.com</td>
+                                <td><span class="status-badge status-sold">Admin</span></td>
+                                <td><span class="status-badge status-available">Active</span></td>
+                                <td>2024-11-29</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>John Smith</strong></td>
+                                <td>john@email.com</td>
+                                <td><span class="status-badge status-reserved">Customer</span></td>
+                                <td><span class="status-badge status-available">Active</span></td>
+                                <td>2024-11-28</td>
+                                <td>
+                                    <button class="btn-admin-secondary mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-admin-secondary">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analyticsSection" class="admin-section hidden">
+                <h2 class="text-2xl font-bold mb-6">Analytics & Reports</h2>
+
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card">
+                        <div class="stat-number">1,234</div>
+                        <p class="text-gray-600">Total Visitors</p>
+                        <p class="text-sm text-green-600 mt-2">
+                            <i class="fas fa-arrow-up"></i> 12% from last month
+                        </p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">456</div>
+                        <p class="text-gray-600">Page Views</p>
+                        <p class="text-sm text-green-600 mt-2">
+                            <i class="fas fa-arrow-up"></i> 8% from last month
+                        </p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12.5%</div>
+                        <p class="text-gray-600">Conversion Rate</p>
+                        <p class="text-sm text-green-600 mt-2">
+                            <i class="fas fa-arrow-up"></i> 3% from last month
+                        </p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$45,600</div>
+                        <p class="text-gray-600">Revenue</p>
+                        <p class="text-sm text-green-600 mt-2">
+                            <i class="fas fa-arrow-up"></i> 15% from last month
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-chart-line mr-2 text-orange-600"></i>
+                            Traffic Overview
+                        </h3>
+                        <div class="text-center py-12 bg-gray-50 rounded-lg">
+                            <i class="fas fa-chart-area text-6xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500">Chart visualization would appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-globe mr-2 text-orange-600"></i>
+                            Top Countries
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-flag-usa text-blue-600 mr-3"></i>
+                                    <span class="font-semibold">United States</span>
+                                </div>
+                                <span class="font-bold text-orange-600">45%</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-maple-leaf text-red-600 mr-3"></i>
+                                    <span class="font-semibold">Canada</span>
+                                </div>
+                                <span class="font-bold text-orange-600">30%</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-globe-europe text-blue-600 mr-3"></i>
+                                    <span class="font-semibold">Europe</span>
+                                </div>
+                                <span class="font-bold text-orange-600">25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-paw mr-2 text-orange-600"></i>
+                        Most Viewed Puppies
+                    </h3>
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Puppy Name</th>
+                                    <th>Views</th>
+                                    <th>Inquiries</th>
+                                    <th>Conversion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Björn</strong></td>
+                                    <td>234</td>
+                                    <td>45</td>
+                                    <td><span class="text-green-600 font-semibold">19.2%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Aino</strong></td>
+                                    <td>198</td>
+                                    <td>38</td>
+                                    <td><span class="text-green-600 font-semibold">19.1%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sisu</strong></td>
+                                    <td>176</td>
+                                    <td>32</td>
+                                    <td><span class="text-green-600 font-semibold">18.2%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settingsSection" class="admin-section hidden">
+                <h2 class="text-2xl font-bold mb-6">Settings</h2>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-cog mr-2 text-orange-600"></i>
+                            General Settings
+                        </h3>
+                        <form class="space-y-4">
+                            <div class="form-group">
+                                <label for="siteName">Site Name</label>
+                                <input type="text" id="siteName" value="Kami Kennels">
+                            </div>
+                            <div class="form-group">
+                                <label for="siteEmail">Contact Email</label>
+                                <input type="email" id="siteEmail" value="info@kamikennels.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="sitePhone">Contact Phone</label>
+                                <input type="tel" id="sitePhone" value="+1 (555) 123-4567">
+                            </div>
+                            <button type="submit" class="btn-admin">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-dollar-sign mr-2 text-orange-600"></i>
+                            Pricing Settings
+                        </h3>
+                        <form class="space-y-4">
+                            <div class="form-group">
+                                <label for="basePriceMale">Base Price (Male)</label>
+                                <input type="number" id="basePriceMale" value="2800" step="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="basePriceFemale">Base Price (Female)</label>
+                                <input type="number" id="basePriceFemale" value="2600" step="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="shippingFee">Shipping Fee</label>
+                                <input type="number" id="shippingFee" value="350" step="50">
+                            </div>
+                            <button type="submit" class="btn-admin">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-envelope mr-2 text-orange-600"></i>
+                            Email Notifications
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span>New Booking Notifications</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span>Contact Form Notifications</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span>Weekly Reports</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-lock mr-2 text-orange-600"></i>
+                            Security Settings
+                        </h3>
+                        <form class="space-y-4">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword">
+                            </div>
+                            <button type="submit" class="btn-admin">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Puppy Modal -->
+    <div id="addPuppyModal" class="adoption-modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Puppy</h3>
+                <button class="modal-close" onclick="closeAddPuppyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addPuppyForm">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label for="puppyName">Puppy Name *</label>
+                            <input type="text" id="puppyName" name="puppyName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="puppyGender">Gender *</label>
+                            <select id="puppyGender" name="puppyGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="puppyAge">Age *</label>
+                            <input type="text" id="puppyAge" name="puppyAge" placeholder="e.g., 10 weeks" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="puppyWeight">Weight</label>
+                            <input type="text" id="puppyWeight" name="puppyWeight" placeholder="e.g., 12 lbs">
+                        </div>
+                        <div class="form-group">
+                            <label for="puppyPrice">Price *</label>
+                            <input type="number" id="puppyPrice" name="puppyPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="puppyStatus">Status *</label>
+                            <select id="puppyStatus" name="puppyStatus" required>
+                                <option value="">Select Status</option>
+                                <option value="available">Available</option>
+                                <option value="reserved">Reserved</option>
+                                <option value="sold">Sold</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="puppyDescription">Description</label>
+                        <textarea id="puppyDescription" name="puppyDescription"
+                            placeholder="Describe the puppy's personality, traits, and characteristics..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="puppyImages">Puppy Images (Multiple)</label>
+                        <input type="file" id="puppyImages" name="puppyImages" accept="image/*" multiple
+                            onchange="previewImages(event)" class="form-control">
+                        <p class="text-sm text-gray-500 mt-1">Select up to 10 images (max 5MB each)</p>
+                        <div id="imagePreview" class="grid grid-cols-3 gap-2 mt-3"></div>
+                    </div>
+
+                    <!-- Parent Details Section -->
+                    <div class="border-t pt-6 mt-6">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-700">Parent Information</h4>
+
+                        <!-- Father Details -->
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h5 class="font-semibold text-blue-800 mb-3">Father Details</h5>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="form-group mb-0">
+                                    <label for="fatherName">Father's Name</label>
+                                    <input type="text" id="fatherName" name="fatherName" placeholder="e.g., Taisto">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label for="fatherImage">Father's Image</label>
+                                    <input type="file" id="fatherImage" name="fatherImage" accept="image/*"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group mb-0 mt-3">
+                                <label for="fatherDescription">Father's Description</label>
+                                <textarea id="fatherDescription" name="fatherDescription" rows="2"
+                                    placeholder="Brief description of father's traits and achievements..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Mother Details -->
+                        <div class="bg-pink-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-pink-800 mb-3">Mother Details</h5>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="form-group mb-0">
+                                    <label for="motherName">Mother's Name</label>
+                                    <input type="text" id="motherName" name="motherName" placeholder="e.g., Helmi">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label for="motherImage">Mother's Image</label>
+                                    <input type="file" id="motherImage" name="motherImage" accept="image/*"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group mb-0 mt-3">
+                                <label for="motherDescription">Mother's Description</label>
+                                <textarea id="motherDescription" name="motherDescription" rows="2"
+                                    placeholder="Brief description of mother's traits and achievements..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" class="btn-admin-secondary" onclick="closeAddPuppyModal()">Cancel</button>
+                        <button type="submit" class="btn-admin">Add Puppy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Admin Panel JavaScript
+        let currentUser = null;
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeAdminPanel();
+        });
+
+        function initializeAdminPanel() {
+            // Login form handler
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLogin);
+
+            // Navigation handler
+            const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
+            navLinks.forEach(link => {
+                if (link.id !== 'logoutBtn') {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const section = this.dataset.section;
+                        showSection(section);
+
+                        // Update active nav
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                }
+            });
+
+            // Logout handler (moved from initializeAdminPanel)
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+        }
+
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginForm').reset();
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.admin-section');
+            sections.forEach(section => section.classList.add('hidden'));
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + 'Section');
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                targetSection.classList.add('fade-in');
+            }
+        }
+
+        // Puppy management functions
+        function openAddPuppyModal() {
+            document.getElementById('addPuppyModal').classList.remove('hidden');
+        }
+
+        function closeAddPuppyModal() {
+            document.getElementById('addPuppyModal').classList.add('hidden');
+            document.getElementById('addPuppyForm').reset();
+        }
+
+        function editPuppy(puppyId) {
+            showNotification(`Edit functionality for ${puppyId} coming soon!`, 'info');
+        }
+
+        function deletePuppy(puppyId) {
+            if (confirm(`Are you sure you want to delete ${puppyId}?`)) {
+                showNotification(`${puppyId} has been deleted`, 'success');
+            }
+        }
+
+        // Booking management functions
+        function viewBooking(bookingId) {
+            showNotification(`Viewing details for booking ${bookingId}`, 'info');
+        }
+
+        function approveBooking(bookingId) {
+            showNotification(`Booking ${bookingId} has been approved`, 'success');
+        }
+
+        function deleteBooking(bookingId) {
+            if (confirm(`Are you sure you want to delete booking ${bookingId}?`)) {
+                showNotification(`Booking ${bookingId} has been deleted`, 'success');
+            }
+        }
+
+        // Sidebar toggle functionality
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.admin-sidebar');
+        const adminMain = document.querySelector('.admin-main');
+
+        sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('collapsed');
+            adminMain.classList.toggle('expanded');
+            sidebarToggle.classList.toggle('shifted');
+        });
+
+        // Handle add puppy form submission
+        document.addEventListener('submit', function (e) {
+            if (e.target.id === 'addPuppyForm') {
+                e.preventDefault();
+
+                const formData = new FormData(e.target);
+                const puppyData = Object.fromEntries(formData);
+
+                // Add puppy to table (demo)
+                addPuppyToTable(puppyData);
+
+                closeAddPuppyModal();
+                showNotification('New puppy added successfully!', 'success');
+            }
+        });
+
+        function addPuppyToTable(puppyData) {
+            const tableBody = document.getElementById('puppiesTableBody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><img src="${puppyData.puppyImage || 'https://via.placeholder.com/48'}" alt="${puppyData.puppyName}" class="w-12 h-12 object-cover rounded-full"></td>
+                <td><strong>${puppyData.puppyName}</strong></td>
+                <td>${puppyData.puppyGender}</td>
+                <td>${puppyData.puppyAge}</td>
+                <td><span class="status-badge status-${puppyData.puppyStatus}">${puppyData.puppyStatus}</span></td>
+                <td>$${puppyData.puppyPrice}</td>
+                <td>
+                    <button class="btn-admin-secondary mr-2" onclick="editPuppy('${puppyData.puppyName.toLowerCase()}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-admin-secondary" onclick="deletePuppy('${puppyData.puppyName.toLowerCase()}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(newRow);
+        }
+    </script>
+</body>
+
+</html>

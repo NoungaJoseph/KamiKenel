@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Puppies - Kami Kennels</title>
+    <meta name="description"
+        content="Browse our available Karelian Bear Dog puppies. Each puppy comes with health guarantee, vaccinations, and lifetime support from Kami Kennels.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 28px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .puppy-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .puppy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .puppy-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .puppy-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .adoption-process {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .process-step {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        /* Video Modal Styles */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        .video-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .video-body {
+            padding: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .puppy-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .puppy-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .puppy-gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .family-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .parent-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .parent-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                padding-top: 50px;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block !important;
+            }
+
+            .adoption-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                backdrop-filter: blur(5px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .modal-content {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+                border-radius: 20px;
+                max-width: 600px;
+                width: 90%;
+                max-height: 90vh;
+                overflow-y: auto;
+                animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(230, 126, 34, 0.1);
+            }
+
+            .modal-header {
+                background: linear-gradient(135deg, var(--secondary-color), #d35400);
+                padding: 25px 30px;
+                border-radius: 20px 20px 0 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: white;
+                box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            }
+
+            .modal-header h3 {
+                font-size: 24px;
+                font-weight: 700;
+                margin: 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .modal-header h3::before {
+                content: '🐾';
+                margin-right: 10px;
+                font-size: 28px;
+            }
+
+            .modal-close {
+                background: rgba(255, 255, 255, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 24px;
+                cursor: pointer;
+                color: white;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-close:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: rotate(90deg);
+            }
+
+            .modal-body {
+                padding: 30px;
+            }
+
+            .booking-form {
+                position: relative;
+            }
+
+            .booking-form input,
+            .booking-form select,
+            .booking-form textarea {
+                width: 100%;
+                padding: 14px 16px 14px 45px;
+                margin-bottom: 20px;
+                border: 2px solid #e5e7eb;
+                border-radius: 12px;
+                font-size: 15px;
+                transition: all 0.3s ease;
+                background: white;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .booking-form input:focus,
+            .booking-form select:focus,
+            .booking-form textarea:focus {
+                outline: none;
+                border-color: var(--secondary-color);
+                box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .booking-form textarea {
+                min-height: 120px;
+                resize: vertical;
+                padding-left: 16px;
+            }
+
+            .booking-form .form-icon {
+                position: absolute;
+                left: 15px;
+                top: 15px;
+                color: var(--secondary-color);
+                font-size: 18px;
+                pointer-events: none;
+            }
+
+            .booking-form .input-wrapper {
+                position: relative;
+                margin-bottom: 0;
+            }
+
+            .booking-form .btn {
+                background: linear-gradient(135deg, var(--secondary-color), #d35400);
+                color: white;
+                padding: 16px 32px;
+                border-radius: 50px;
+                border: none;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .booking-form .btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+            }
+
+            .booking-form .btn i {
+                margin-right: 8px;
+            }
+
+            .puppy-info-card {
+                background: linear-gradient(135deg, rgba(230, 126, 34, 0.1), rgba(230, 126, 34, 0.05));
+                border-radius: 15px;
+                padding: 20px;
+                margin-bottom: 25px;
+                border-left: 4px solid var(--secondary-color);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            }
+
+            .puppy-info-card img {
+                border-radius: 50%;
+                border: 4px solid white;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .shipping-info {
+                background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-left: 4px solid var(--accent-color);
+            }
+
+            .shipping-info h5 {
+                color: var(--accent-color);
+                display: flex;
+                align-items: center;
+            }
+
+            .shipping-info h5::before {
+                content: '🚚';
+                margin-right: 8px;
+                font-size: 20px;
+            }
+
+            @media (max-width: 768px) {
+                .modal-content {
+                    width: 95%;
+                    max-height: 95vh;
+                }
+
+                .modal-header {
+                    padding: 20px;
+                }
+
+                .modal-body {
+                    padding: 20px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
+                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Available Puppies
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Meet our exceptional Karelian Bear Dog puppies. Each comes with health guarantee, first
+                    vaccinations, and lifetime support. Click on any puppy to see videos, photos, and learn about their
+                    family.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shipping Information Banner -->
+    <section class="py-4 bg-orange-100 border-l-4 border-orange-500">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center text-orange-800">
+                <i class="fas fa-shipping-fast mr-3 text-xl"></i>
+                <p class="font-semibold">
+                    🚚 Express Shipping Available to All US States, Canada, Germany, Croatia, Denmark & More European
+                    Countries!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 bg-white border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="filter-btn active" data-filter="all">All Puppies</button>
+                <button class="filter-btn" data-filter="male">Males</button>
+                <button class="filter-btn" data-filter="female">Females</button>
+                <button class="filter-btn" data-filter="available">Available Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Puppies Gallery -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="puppies-grid">
+
+                <!-- Puppy 1: Björn -->
+                <div class="puppy-card bg-white shadow-lg fade-in-up" data-category="male available"
+                    data-puppy-name="Björn">
+                    <img src="https://kimi-web-img.moonshot.cn/img/doglime.com/664ac4ce7cf2213052680e3f654ee45fbd11f8c5.jpg"
+                        alt="Björn - Karelian Bear Dog Puppy" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-display font-bold">Björn</h3>
+                            <span
+                                class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Available</span>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <p><strong>Gender:</strong> Male</p>
+                            <p><strong>Age:</strong> 10 weeks (Born September 15, 2024)</p>
+                            <p><strong>Weight:</strong> 12 lbs</p>
+                            <p><strong>Color:</strong> Black with white markings</p>
+                            <p class="text-2xl font-bold text-orange-600 mt-3">$2,500</p>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Confident and playful male with excellent markings. Shows strong hunting instincts and loves
+                            to explore. Great with children and very social.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Confident</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Playful</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Social</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="btn-primary flex-1" onclick="openPuppyProfile('bjorn')">
+                                <i class="fas fa-play mr-2"></i>
+                                View Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Puppy 2: Aino -->
+                <div class="puppy-card bg-white shadow-lg fade-in-up" data-category="female available"
+                    data-puppy-name="Aino" style="animation-delay: 0.1s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/consumer-cms.petfinder.com/27c1b0acd3f38b424fb058f40b142ad7e38dc457.jpg"
+                        alt="Aino - Karelian Bear Dog Puppy" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-display font-bold">Aino</h3>
+                            <span
+                                class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Available</span>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <p><strong>Gender:</strong> Female</p>
+                            <p><strong>Age:</strong> 10 weeks (Born September 15, 2024)</p>
+                            <p><strong>Weight:</strong> 10 lbs</p>
+                            <p><strong>Color:</strong> Black with white chest</p>
+                            <p class="text-2xl font-bold text-orange-600 mt-3">$2,800</p>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Sweet and intelligent female with a gentle disposition. Very attentive and eager to please.
+                            Perfect for a family looking for a loyal companion.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-sm">Gentle</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Intelligent</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Attentive</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="btn-primary flex-1" onclick="openPuppyProfile('aino')">
+                                <i class="fas fa-play mr-2"></i>
+                                View Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Puppy 3: Sisu -->
+                <div class="puppy-card bg-white shadow-lg fade-in-up" data-category="male available"
+                    data-puppy-name="Sisu" style="animation-delay: 0.2s;">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.agroinform.com/940fa0b97c3163421b7b96201551b8bd5211db2c.jpg"
+                        alt="Sisu - Karelian Bear Dog Puppy" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-display font-bold">Sisu</h3>
+                            <span
+                                class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Available</span>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <p><strong>Gender:</strong> Male</p>
+                            <p><strong>Age:</strong> 10 weeks (Born September 15, 2024)</p>
+                            <p><strong>Weight:</strong> 11 lbs</p>
+                            <p><strong>Color:</strong> Black with white markings</p>
+                            <p class="text-2xl font-bold text-orange-600 mt-3">$2,500</p>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Bold and energetic male with exceptional markings. Very curious and intelligent, showing
+                            great promise for both hunting and companionship.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Bold</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">Energetic</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Curious</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="btn-primary flex-1" onclick="openPuppyProfile('sisu')">
+                                <i class="fas fa-play mr-2"></i>
+                                View Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More puppies would continue here with similar structure -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal" style="display: none;">
+        <div class="video-content">
+            <div class="video-header">
+                <h3 id="modalTitle">Puppy Profile</h3>
+                <button class="video-close" onclick="closeVideoModal()">&times;</button>
+            </div>
+            <div class="video-body" id="modalBody">
+                <!-- Content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Adoption Process -->
+    <section class="adoption-process py-20 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 fade-in-up">
+                    Adoption Process
+                </h2>
+                <p class="text-xl max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Our thorough adoption process ensures the best match for both you and your new Karelian Bear Dog
+                    companion.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="process-step fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="step-number">1</div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">View Profiles</h3>
+                    <p class="text-gray-600">Browse our available puppies and click on profiles to see videos, photos,
+                        and learn about their families.</p>
+                </div>
+
+                <div class="process-step fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="step-number">2</div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Book Your Pup</h3>
+                    <p class="text-gray-600">Click "Book Now" to start the adoption process with our detailed
+                        application form.</p>
+                </div>
+
+                <div class="process-step fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="step-number">3</div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Meet & Approve</h3>
+                    <p class="text-gray-600">Schedule a visit or video call to meet your chosen puppy and complete the
+                        approval process.</p>
+                </div>
+
+                <div class="process-step fade-in-up" style="animation-delay: 1.0s;">
+                    <div class="step-number">4</div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Take Home</h3>
+                    <p class="text-gray-600">Arrange pickup or express shipping to welcome your new family member home.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- International Shipping -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    International Shipping Available
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    We offer express shipping to families across North America and Europe. Your puppy will travel safely
+                    with our experienced transport partners.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-flag-usa text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">United States</h3>
+                    <p class="text-gray-600">Express shipping to all 50 states</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-maple-leaf text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Canada</h3>
+                    <p class="text-gray-600">All provinces and territories</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-globe-europe text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Europe</h3>
+                    <p class="text-gray-600">Germany, Croatia, Denmark, and more</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 1.0s;">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Safe Transport</h3>
+                    <p class="text-gray-600">Experienced handlers and climate control</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
+                        breed preservation.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>info@kamikennels.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Enhanced puppy profile data
+        const puppyProfiles = {
+            bjorn: {
+                name: "Björn",
+                price: 2500,
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/doglime.com/664ac4ce7cf2213052680e3f654ee45fbd11f8c5.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/beardogs.org/ac072fc26e17b7a96192c5080985db135f9cab4b.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/www.akc.org/b2713d5593c6fd7cf6e29fa53c0015a3a6812853.jpg"
+                ],
+                siblings: ["Aino", "Sisu", "Lumi"],
+                parents: {
+                    father: {
+                        name: "Taisto",
+                        image: "https://kimi-web-img.moonshot.cn/img/s3-media0.fl.yelpcdn.com/a7bc6aa98134b5e13fd2d5dda3bff4060e7e8928.jpg",
+                        description: "Champion sire with excellent hunting instincts and stable temperament."
+                    },
+                    mother: {
+                        name: "Helmi",
+                        image: "https://kimi-web-img.moonshot.cn/img/rockinjc.com/280da16f11c4c1e39ece8195d32fa4cf503f6c37.jpeg",
+                        description: "Beautiful dam with gentle nature and strong maternal instincts."
+                    }
+                }
+            },
+            aino: {
+                name: "Aino",
+                price: 2800,
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/consumer-cms.petfinder.com/27c1b0acd3f38b424fb058f40b142ad7e38dc457.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/i.pinimg.com/44ff073dca9d7a23b526c5776711ef8d5a01411d.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/images.squarespace-cdn.com/35feead52abe6c105dbf5a951fc7adbf6609cab6.jpeg"
+                ],
+                siblings: ["Björn", "Sisu", "Lumi"],
+                parents: {
+                    father: {
+                        name: "Taisto",
+                        image: "https://kimi-web-img.moonshot.cn/img/s3-media0.fl.yelpcdn.com/a7bc6aa98134b5e13fd2d5dda3bff4060e7e8928.jpg",
+                        description: "Champion sire with excellent hunting instincts and stable temperament."
+                    },
+                    mother: {
+                        name: "Helmi",
+                        image: "https://kimi-web-img.moonshot.cn/img/rockinjc.com/280da16f11c4c1e39ece8195d32fa4cf503f6c37.jpeg",
+                        description: "Beautiful dam with gentle nature and strong maternal instincts."
+                    }
+                }
+            },
+            sisu: {
+                name: "Sisu",
+                price: 2500,
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/static.agroinform.com/940fa0b97c3163421b7b96201551b8bd5211db2c.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/dogacademy.org/14830ccea79d1b85d2068844eceed8b4704e940b.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/www.dogster.com/01c5a01097228757c9a8a87c0ba7393b79e4c6e9.jpg"
+                ],
+                siblings: ["Björn", "Aino", "Lumi"],
+                parents: {
+                    father: {
+                        name: "Taisto",
+                        image: "https://kimi-web-img.moonshot.cn/img/s3-media0.fl.yelpcdn.com/a7bc6aa98134b5e13fd2d5dda3bff4060e7e8928.jpg",
+                        description: "Champion sire with excellent hunting instincts and stable temperament."
+                    },
+                    mother: {
+                        name: "Helmi",
+                        image: "https://kimi-web-img.moonshot.cn/img/rockinjc.com/280da16f11c4c1e39ece8195d32fa4cf503f6c37.jpeg",
+                        description: "Beautiful dam with gentle nature and strong maternal instincts."
+                    }
+                }
+            }
+        };
+
+        // Function to open puppy profile modal
+        function openPuppyProfile(puppyId) {
+            const puppy = puppyProfiles[puppyId];
+            if (!puppy) return;
+
+            const videoModal = document.createElement('div');
+            videoModal.className = 'adoption-modal'; // Reusing existing modal class for styling
+            videoModal.id = 'dynamicVideoModal'; // Give it an ID to easily remove later
+            videoModal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>${puppy.name}'s Profile</h3>
+                        <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Header Image -->
+                        <div class="mb-6">
+                            <img src="${puppy.images[0]}" alt="${puppy.name}" class="w-full h-96 object-cover rounded-lg shadow-lg">
+                        </div>
+                        
+                        <!-- Additional Images Gallery -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            ${puppy.images.slice(1, 4).map(img => `
+                                <img src="${img}" alt="${puppy.name}" class="w-full h-48 object-cover rounded-lg shadow">
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Puppy Characteristics -->
+                        <div class="bg-orange-50 p-6 rounded-lg mb-6">
+                            <h4 class="text-xl font-bold text-orange-800 mb-4">Characteristics</h4>
+                            <div class="grid md:grid-cols-2 gap-4 text-gray-700">
+                                <div><strong>Temperament:</strong> Brave, Energetic, Loyal</div>
+                                <div><strong>Energy Level:</strong> Very High</div>
+                                <div><strong>Good with Children:</strong> Yes, with supervision</div>
+                                <div><strong>Trainability:</strong> High</div>
+                                <div><strong>Exercise Needs:</strong> Very High</div>
+                                <div><strong>Grooming:</strong> Moderate</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Parents Information -->
+                        <div class="family-info">
+                            <h4 class="text-xl font-bold mb-4 text-center">Meet the Parents</h4>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <!-- Father -->
+                                <div class="parent-card">
+                                    <img src="${puppy.parents.father.image}" alt="${puppy.parents.father.name}">
+                                    <h5 class="font-bold text-lg mb-2">Father: ${puppy.parents.father.name}</h5>
+                                    <p class="text-sm text-gray-600">${puppy.parents.father.description}</p>
+                                </div>
+                                
+                                <!-- Mother -->
+                                <div class="parent-card">
+                                    <img src="${puppy.parents.mother.image}" alt="${puppy.parents.mother.name}">
+                                    <h5 class="font-bold text-lg mb-2">Mother: ${puppy.parents.mother.name}</h5>
+                                    <p class="text-sm text-gray-600">${puppy.parents.mother.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Booking Button -->
+                        <div class="mt-6 text-center">
+                            <button onclick="closeVideoModal(); openBookingForm('${puppyId}')" class="btn btn-primary">
+                                <i class="fas fa-heart mr-2"></i>
+                                Book ${puppy.name} Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(videoModal);
+
+            // Close on background click
+            videoModal.addEventListener('click', function (e) {
+                if (e.target === videoModal) {
+                    closeVideoModal();
+                }
+            });
+        }
+
+        // Function to close video modal
+        function closeVideoModal() {
+            const dynamicModal = document.getElementById('dynamicVideoModal');
+            if (dynamicModal) {
+                document.body.removeChild(dynamicModal);
+            }
+        }
+
+        // Function to open booking form
+        function openBookingForm(puppyId) {
+            const puppy = puppyProfiles[puppyId];
+            // closeVideoModal(); // This is now handled by the button's onclick
+
+            // Create booking modal
+            const bookingModal = document.createElement('div');
+            bookingModal.className = 'adoption-modal';
+            bookingModal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Book ${puppy.name}</h3>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="puppy-info-card text-center">
+                            <img src="${puppy.images[0]}" alt="${puppy.name}" class="w-24 h-24 object-cover mx-auto mb-3">
+                            <h4 class="text-xl font-bold text-gray-800">${puppy.name}</h4>
+                            <p class="text-gray-600 text-sm">Complete the form below to start the adoption process</p>
+                        </div>
+                        
+                        <form class="booking-form" action="https://formspree.io/f/xovoornv" method="POST">
+                            <input type="hidden" name="puppy" value="${puppy.name}">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user form-icon"></i>
+                                    <input type="text" name="firstName" placeholder="First Name" required>
+                                </div>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user form-icon"></i>
+                                    <input type="text" name="lastName" placeholder="Last Name" required>
+                                </div>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-envelope form-icon"></i>
+                                    <input type="email" name="email" placeholder="Email Address" required>
+                                </div>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-phone form-icon"></i>
+                                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                                </div>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-map-marker-alt form-icon"></i>
+                                    <select name="location" required>
+                                        <option value="">Preferred Location</option>
+                                        <option value="canada">Canada</option>
+                                        <option value="usa">United States</option>
+                                        <option value="europe">Europe</option>
+                                    </select>
+                                </div>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-dog form-icon"></i>
+                                    <select name="experience" required>
+                                        <option value="">Experience Level</option>
+                                        <option value="first-time">First-time owner</option>
+                                        <option value="some-experience">Some experience</option>
+                                        <option value="experienced">Experienced</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <textarea name="message" placeholder="Tell us about your experience with dogs and why you'd be a good home for ${puppy.name}..." required></textarea>
+                            <div class="shipping-info">
+                                <h5 class="font-semibold mb-2">International Shipping Available</h5>
+                                <p class="text-sm text-gray-700">We ship to all US states, Canada, Germany, Croatia, Denmark, and other European countries. Shipping costs will be calculated based on your location.</p>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Submit Booking Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(bookingModal);
+
+            // Handle booking form submission
+            const bookingForm = bookingModal.querySelector('.booking-form');
+            bookingForm.addEventListener('submit', function (e) {
+                // Let Formspree handle the submission
+                showNotification(`Booking request for ${puppy.name} is being submitted...`, 'success');
+                // Form will submit to Formspree and redirect
+            });
+
+            // Close modal functionality
+            const closeBtn = bookingModal.querySelector('.modal-close');
+            closeBtn.addEventListener('click', function () {
+                document.body.removeChild(bookingModal);
+            });
+
+            // Close on background click
+            bookingModal.addEventListener('click', function (e) {
+                if (e.target === bookingModal) {
+                    document.body.removeChild(bookingModal);
+                }
+            });
+        }
+
+        // Function to enlarge image
+        function enlargeImage(imageSrc) {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'adoption-modal';
+            lightbox.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; padding: 20px;">
+                    <img src="${imageSrc}" style="max-width: 90%; max-height: 90%; border-radius: 10px;" alt="Enlarged Image">
+                </div>
+            `;
+
+            document.body.appendChild(lightbox);
+
+            lightbox.addEventListener('click', function () {
+                document.body.removeChild(lightbox);
+            });
+        }
+
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const puppyCards = document.querySelectorAll('.puppy-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const filter = this.dataset.filter;
+
+                    // Update active button
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter cards
+                    puppyCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category.includes(filter)) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(30px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

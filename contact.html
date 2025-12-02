@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Kami Kennels</title>
+    <meta name="description"
+        content="Contact Kami Kennels for Karelian Bear Dog puppies. International locations in Canada, US, and Europe. Get in touch with our experienced team.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-card {
+            transition: all 0.3s ease;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .branch-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .branch-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: left 0.3s ease;
+                padding-top: 50px;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
+                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Contact Kami Kennels
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Get in touch with our experienced team. We have international locations to serve families across
+                    Canada, the United States, and Europe.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Branch Locations -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Our Locations
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Choose the location closest to you for personalized service and support.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Canada Branch -->
+                <div class="branch-card fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="branch-icon">
+                        <i class="fas fa-maple-leaf"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Canada</h3>
+                    <div class="space-y-3 text-gray-600">
+                        <p><i class="fas fa-map-marker-alt mr-2 text-orange-600"></i>Ontario, Canada</p>
+                        <p><i class="fas fa-phone mr-2 text-orange-600"></i>+1 (416) 555-0123</p>
+                        <p><i class="fas fa-envelope mr-2 text-orange-600"></i>canada@kamikennels.com</p>
+                        <p><i class="fas fa-clock mr-2 text-orange-600"></i>Mon-Fri: 9AM-6PM EST</p>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="font-semibold mb-2">Serving:</h4>
+                        <p class="text-sm text-gray-600">Ontario, Quebec, Eastern Canada</p>
+                    </div>
+                </div>
+
+                <!-- United States Branch -->
+                <div class="branch-card fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="branch-icon">
+                        <i class="fas fa-flag-usa"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">United States</h3>
+                    <div class="space-y-3 text-gray-600">
+                        <p><i class="fas fa-map-marker-alt mr-2 text-orange-600"></i>Colorado, USA</p>
+                        <p><i class="fas fa-phone mr-2 text-orange-600"></i>+1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope mr-2 text-orange-600"></i>usa@kamikennels.com</p>
+                        <p><i class="fas fa-clock mr-2 text-orange-600"></i>Mon-Fri: 8AM-7PM MST</p>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="font-semibold mb-2">Serving:</h4>
+                        <p class="text-sm text-gray-600">Western & Central United States</p>
+                    </div>
+                </div>
+
+                <!-- Europe Branch -->
+                <div class="branch-card fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="branch-icon">
+                        <i class="fas fa-globe-europe"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Europe</h3>
+                    <div class="space-y-3 text-gray-600">
+                        <p><i class="fas fa-map-marker-alt mr-2 text-orange-600"></i>Finland</p>
+                        <p><i class="fas fa-phone mr-2 text-orange-600"></i>+358 40 123 4567</p>
+                        <p><i class="fas fa-envelope mr-2 text-orange-600"></i>europe@kamikennels.com</p>
+                        <p><i class="fas fa-clock mr-2 text-orange-600"></i>Mon-Fri: 9AM-5PM EET</p>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="font-semibold mb-2">Serving:</h4>
+                        <p class="text-sm text-gray-600">Finland, Sweden, Norway, EU</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                        Get In Touch
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                        Ready to welcome a Karelian Bear Dog into your family? Fill out the form below and we'll get
+                        back to you within 24 hours.
+                    </p>
+                </div>
+
+                <div class="contact-form p-8 fade-in-up" style="animation-delay: 0.4s;">
+                    <form id="contactForm" class="grid md:grid-cols-2 gap-6" action="https://formspree.io/f/xovoornv"
+                        method="POST">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Preferred Location *</label>
+                            <select id="location" name="location" required>
+                                <option value="">Select a location</option>
+                                <option value="canada">Canada</option>
+                                <option value="usa">United States</option>
+                                <option value="europe">Europe</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Dog Ownership Experience *</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">Select your experience level</option>
+                                <option value="first-time">First-time dog owner</option>
+                                <option value="some-experience">Some experience</option>
+                                <option value="experienced">Experienced dog owner</option>
+                                <option value="professional">Professional/Working with dogs</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group md:col-span-2">
+                            <label for="interest">What are you interested in? *</label>
+                            <select id="interest" name="interest" required>
+                                <option value="">Select your interest</option>
+                                <option value="companion">Family companion</option>
+                                <option value="working">Working/hunting dog</option>
+                                <option value="show">Show/breeding potential</option>
+                                <option value="therapy">Therapy/service work</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group md:col-span-2">
+                            <label for="message">Tell us about yourself and what you're looking for in a Karelian Bear
+                                Dog *</label>
+                            <textarea id="message" name="message"
+                                placeholder="Please include information about your living situation, family, lifestyle, and why you think a Karelian Bear Dog would be a good fit for you..."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group md:col-span-2">
+                            <button type="submit" class="btn-primary w-full">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Contact Methods -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Other Ways to Connect
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Prefer a different way to get in touch? We're available through multiple channels.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Phone</h3>
+                    <p class="text-gray-600">Call us for immediate assistance with urgent questions or to schedule a
+                        visit.</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-video text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Video Call</h3>
+                    <p class="text-gray-600">Schedule a virtual meeting to see our facilities and meet available
+                        puppies.</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Schedule Visit</h3>
+                    <p class="text-gray-600">Book an appointment to visit our facility and meet our dogs in person.</p>
+                </div>
+
+                <div class="text-center fade-in-up" style="animation-delay: 1.0s;">
+                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-2xl text-pink-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Newsletter</h3>
+                    <p class="text-gray-600">Subscribe for updates on upcoming litters and training tips.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Hours -->
+    <section class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                        Business Hours
+                    </h2>
+                    <p class="text-xl text-gray-600 fade-in-up" style="animation-delay: 0.2s;">
+                        We're available to serve you during these hours. Weekend appointments available by request.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg text-center fade-in-up" style="animation-delay: 0.4s;">
+                        <h3 class="text-xl font-semibold mb-4 text-red-600">Canada</h3>
+                        <div class="space-y-2 text-gray-600">
+                            <p><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM EST</p>
+                            <p><strong>Saturday:</strong> 10:00 AM - 4:00 PM EST</p>
+                            <p><strong>Sunday:</strong> By appointment only</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg text-center fade-in-up" style="animation-delay: 0.6s;">
+                        <h3 class="text-xl font-semibold mb-4 text-blue-600">United States</h3>
+                        <div class="space-y-2 text-gray-600">
+                            <p><strong>Monday - Friday:</strong> 8:00 AM - 7:00 PM MST</p>
+                            <p><strong>Saturday:</strong> 9:00 AM - 5:00 PM MST</p>
+                            <p><strong>Sunday:</strong> By appointment only</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg text-center fade-in-up" style="animation-delay: 0.8s;">
+                        <h3 class="text-xl font-semibold mb-4 text-blue-500">Europe</h3>
+                        <div class="space-y-2 text-gray-600">
+                            <p><strong>Monday - Friday:</strong> 9:00 AM - 5:00 PM EET</p>
+                            <p><strong>Saturday:</strong> 10:00 AM - 3:00 PM EET</p>
+                            <p><strong>Sunday:</strong> Closed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
+                        breed preservation.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>info@kamikennels.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>
