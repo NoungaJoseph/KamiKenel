@@ -95,6 +95,45 @@
             font-weight: 500;
             margin: 4px;
         }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: #f1f1f1;
+        }
     </style>
 </head>
 
@@ -123,8 +162,8 @@
                     <div class="grid md:grid-cols-2 gap-8 p-8">
                         <!-- Main Image -->
                         <div>
-                            <img id="mainImage" src="" alt="Puppy"
-                                class="w-full h-96 object-cover rounded-xl shadow-lg">
+                            <img id="mainImage" src="" alt="Puppy" onclick="openLightbox(this.src)"
+                                class="w-full h-96 object-cover rounded-xl shadow-lg cursor-pointer hover:opacity-90 transition">
                         </div>
 
                         <!-- Puppy Info -->
@@ -159,7 +198,7 @@
                 </div>
 
                 <!-- Additional Images Gallery -->
-                <div id="imageGallery" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div id="imageGallery" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                     <!-- Gallery images will be inserted here -->
                 </div>
 
@@ -200,7 +239,9 @@
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Father -->
                         <div class="parent-card">
-                            <img src="resources/parents.jpg" alt="Father">
+                            <img src="resources/parents.jpg" alt="Father"
+                                onclick="openLightbox('resources/parents.jpg')"
+                                class="cursor-pointer hover:opacity-90 transition">
                             <h3 class="text-xl font-bold mb-2">Father: Taisto</h3>
                             <p class="text-gray-600">Champion sire with excellent hunting instincts and stable
                                 temperament. Proven track record of producing healthy, well-tempered puppies.</p>
@@ -208,7 +249,9 @@
 
                         <!-- Mother -->
                         <div class="parent-card">
-                            <img src="resources/parents.jpg" alt="Mother">
+                            <img src="resources/parents.jpg" alt="Mother"
+                                onclick="openLightbox('resources/parents.jpg')"
+                                class="cursor-pointer hover:opacity-90 transition">
                             <h3 class="text-xl font-bold mb-2">Mother: Helmi</h3>
                             <p class="text-gray-600">Beautiful dam with gentle nature and strong maternal instincts.
                                 Known for producing puppies with excellent temperament and conformation.</p>
@@ -217,6 +260,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">×</span>
+        <img id="lightboxImage" src="" alt="Full size image">
     </div>
 
     <!-- Booking Modal (will be created dynamically) -->
@@ -232,11 +281,11 @@
                 age: "10 weeks (Born September 15, 2024)",
                 weight: "12 lbs",
                 color: "Black with white markings",
-                price: 950,
+                price: 1500,
                 description: "Confident and playful male with excellent markings. Shows strong hunting instincts and loves to explore. Great with children and very social.",
                 traits: ["Confident", "Playful", "Social"],
                 traitColors: ["blue", "yellow", "green"],
-                images: ["resources/1.jpg", "resources/1.jpg", "resources/1.jpg", "resources/1.jpg"]
+                images: ["resources/1.jpg", "resources/2copy.jpg"]
             },
             aino: {
                 name: "Aino",
@@ -244,11 +293,11 @@
                 age: "10 weeks (Born September 15, 2024)",
                 weight: "10 lbs",
                 color: "Black with white chest",
-                price: 950,
+                price: 1500,
                 description: "Sweet and intelligent female with a gentle disposition. Very attentive and eager to please. Perfect for a family looking for a loyal companion.",
                 traits: ["Gentle", "Intelligent", "Attentive"],
                 traitColors: ["pink", "purple", "green"],
-                images: ["resources/2.jpg", "resources/2.jpg", "resources/2.jpg", "resources/2.jpg"]
+                images: ["resources/2.jpg", "resources/2copy.jpg"]
             },
             sisu: {
                 name: "Sisu",
@@ -256,11 +305,11 @@
                 age: "10 weeks (Born September 15, 2024)",
                 weight: "11 lbs",
                 color: "Black with white markings",
-                price: 950,
+                price: 1500,
                 description: "Bold and energetic male with exceptional markings. Very curious and intelligent, showing great promise for both hunting and companionship.",
                 traits: ["Bold", "Energetic", "Curious"],
                 traitColors: ["red", "orange", "blue"],
-                images: ["resources/3.jpg", "resources/3.jpg", "resources/3.jpg", "resources/3.jpg"]
+                images: ["resources/3.jpg", "resources/3copy.jpg"]
             },
             koda: {
                 name: "Koda",
@@ -268,11 +317,11 @@
                 age: "10 weeks (Born September 15, 2024)",
                 weight: "13 lbs",
                 color: "Black with white markings",
-                price: 950,
+                price: 1500,
                 description: "Brave and adventurous male with a strong personality. Natural leader with excellent hunting drive. Very loyal and protective of his family.",
                 traits: ["Brave", "Adventurous", "Loyal"],
                 traitColors: ["indigo", "teal", "green"],
-                images: ["resources/4.jpg", "resources/4.jpg", "resources/4.jpg", "resources/4.jpg"]
+                images: ["resources/4.jpg", "resources/4copy.jpg"]
             },
             luna: {
                 name: "Luna",
@@ -280,11 +329,11 @@
                 age: "10 weeks (Born September 15, 2024)",
                 weight: "9 lbs",
                 color: "Black with white chest and paws",
-                price: 950,
+                price: 1500,
                 description: "Sweet and gentle female with a calm demeanor. Very affectionate and loves attention. Perfect for families looking for a loving companion with a gentle spirit.",
                 traits: ["Sweet", "Gentle", "Affectionate"],
                 traitColors: ["pink", "purple", "rose"],
-                images: ["resources/5.jpg", "resources/5.jpg", "resources/5.jpg", "resources/5.jpg"]
+                images: ["resources/5.jpg", "resources/5copy.jpg"]
             }
         };
 
@@ -326,9 +375,9 @@
                     const imgElement = document.createElement('img');
                     imgElement.src = img;
                     imgElement.alt = `${puppy.name} ${index}`;
-                    imgElement.className = 'gallery-image w-full h-48 object-cover rounded-lg shadow-md';
+                    imgElement.className = 'gallery-image w-full h-64 object-cover rounded-lg shadow-md cursor-pointer';
                     imgElement.onclick = () => {
-                        document.getElementById('mainImage').src = img;
+                        openLightbox(img);
                     };
                     gallery.appendChild(imgElement);
                 }
@@ -336,6 +385,16 @@
         } else {
             // Redirect to puppies page if no valid ID
             window.location.href = 'puppies.html';
+        }
+
+        // Lightbox functions
+        function openLightbox(imageSrc) {
+            document.getElementById('lightboxImage').src = imageSrc;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
         }
 
         // Booking form function
@@ -373,11 +432,16 @@
                                     <option value="usa">United States</option>
                                     <option value="europe">Europe</option>
                                 </select>
-                                <select name="experience" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none md:col-span-2">
+                                <select name="experience" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
                                     <option value="">Experience Level</option>
                                     <option value="first-time">First-time owner</option>
                                     <option value="some-experience">Some experience</option>
                                     <option value="experienced">Experienced</option>
+                                </select>
+                                <select name="deliveryMethod" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+                                    <option value="">Delivery Method *</option>
+                                    <option value="shipping">Shipping</option>
+                                    <option value="pickup">Pickup</option>
                                 </select>
                             </div>
                             <textarea name="message" placeholder="Tell us about yourself and why you'd be a great home for ${puppy.name}" required class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none" rows="4"></textarea>
