@@ -326,6 +326,8 @@
                     <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
                     <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
                     <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
+                    <a href="videos.html" class="nav-link text-gray-700 font-medium">Videos</a>
+                    <a href="posts.html" class="nav-link text-gray-700 font-medium">Posts</a>
                     <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
                     <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
                     <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
@@ -541,6 +543,48 @@
                     <i class="fas fa-paw mr-2"></i>
                     View All Available Puppies
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Watch Our Dogs in Action
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    Experience the joy and energy of our Karelian Bear Dogs as they play and explore in their natural
+                    environment.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl fade-in-up" style="animation-delay: 0.4s;">
+                    <video id="homepageVideo" class="w-full cursor-pointer" controls poster="resources/video-poster.jpg"
+                        onclick="openVideoFullscreen(this)">
+                        <source src="resources/homepagevideo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="absolute bottom-4 right-4 bg-black bg-opacity-60 text-white px-4 py-2 rounded-lg cursor-pointer"
+                        onclick="openVideoFullscreen(document.getElementById('homepageVideo'))">
+                        <i class="fas fa-expand mr-2"></i>Fullscreen
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Karelian Bear Dogs at Play</h3>
+                    <p class="text-gray-600 mb-6">
+                        Watch our beautiful Karelian Bear Dogs enjoying their time in the woods. These fearless and
+                        energetic companions love to explore, play, and showcase their natural hunting instincts. Their
+                        strong bond with nature and incredible athleticism make them perfect for active families who
+                        appreciate the outdoors.
+                    </p>
+                    <a href="videos.html" class="btn-primary">
+                        <i class="fas fa-play-circle mr-2"></i>
+                        View More Videos
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -797,13 +841,230 @@
             </div>
 
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+                ```
+            </div>
+
+            <div class="fade-in-up" style="animation-delay: 0.2s;">
+                <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="120">0</div>
+                <p class="text-lg">Puppies Placed</p>
+            </div>
+
+            <div class="fade-in-up" style="animation-delay: 0.4s;">
+                <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="98">0</div>
+                <p class="text-lg">% Health Success Rate</p>
+            </div>
+
+            <div class="fade-in-up" style="animation-delay: 0.6s;">
+                <div class="text-4xl md:text-5xl font-display font-bold mb-2 counter" data-target="3">0</div>
+                <p class="text-lg">Countries Served</p>
             </div>
         </div>
-    </footer>
+        </div>
+        </section>
 
-    <!-- JavaScript -->
-    <script src="main.js"></script>
+        <!-- Reviews Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                        What Our Families Say
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                        Join hundreds of happy families who have found their perfect companion with Kami Kennels.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- USA Reviews -->
+                    <div class="bg-white p-6 rounded-lg shadow-md fade-in-up">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Sarah Jenkins"
+                                class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold text-gray-800">Sarah Jenkins</h4>
+                                <p class="text-sm text-gray-500">Colorado, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">"We are so in love with our KBD puppy! The shipping process to
+                            Colorado was seamless. Kami Kennels handled everything."</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md fade-in-up">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Mike Thompson"
+                                class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold text-gray-800">Mike Thompson</h4>
+                                <p class="text-sm text-gray-500">Montana, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">"Excellent breeder. Our pup arrived healthy and happy. The
+                            shipping
+                            crate was secure and comfortable."</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md fade-in-up">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Emily Davis"
+                                class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold text-gray-800">Emily Davis</h4>
+                                <p class="text-sm text-gray-500">California, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">"I was worried about shipping a puppy, but Kami Kennels made it
+                            easy. They kept us updated every step of the way."</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md fade-in-up">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="James Wilson"
+                                class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold text-gray-800">James Wilson</h4>
+                                <p class="text-sm text-gray-500">Texas, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">"Great communication and a beautiful dog. We picked him up at
+                            the
+                            airport and he was wagging his tail!"</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md fade-in-up">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Jessica Martinez"
+                                class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div>
+                                <h4 class="font-bold text-gray-800">Jessica Martinez</h4>
+                                <p class="text-sm text-gray-500">New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">"Our little bear dog is perfect. Shipping to NY was fast and
+                            professional. Highly recommend!"</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="reviews.html" class="btn-primary">
+                        <i class="fas fa-comments mr-2"></i>
+                        View All Reviews
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Ready to Welcome a Karelian Bear Dog?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8 fade-in-up" style="animation-delay: 0.2s;">
+                    Contact us today to learn more about our available puppies and adoption process. We're here to help
+                    you
+                    find the perfect companion for your family.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in-up" style="animation-delay: 0.4s;">
+                    <a href="contact.html" class="btn-primary">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Contact Us
+                    </a>
+                    <a href="faq.html" class="btn-secondary">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Read FAQ
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                            <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                        </div>
+                        <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament,
+                            and
+                            breed preservation.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About
+                                    Us</a>
+                            </li>
+                            <li><a href="puppies.html"
+                                    class="text-gray-400 hover:text-white transition-colors">Available
+                                    Puppies</a></li>
+                            <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a>
+                            </li>
+                            <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><i class="fas fa-envelope mr-2"></i>kevinflores3576@gmail.com</li>
+                            <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- JavaScript -->
+        <script src="main.js"></script>
+        <script>
+            // Fullscreen video function
+            function openVideoFullscreen(videoElement) {
+                if (videoElement.requestFullscreen) {
+                    videoElement.requestFullscreen();
+                } else if (videoElement.webkitRequestFullscreen) {
+                    videoElement.webkitRequestFullscreen();
+                } else if (videoElement.msRequestFullscreen) {
+                    videoElement.msRequestFullscreen();
+                }
+                videoElement.play();
+            }
+        </script>
 </body>
 
 </html>
+```
