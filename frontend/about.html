@@ -129,16 +129,27 @@
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                transition: left 0.3s ease;
+                transition: all 0.3s ease;
                 padding-top: 50px;
+                display: flex;
+                /* Ensure flex is set but hidden by left positioning */
             }
 
             .nav-menu.active {
                 left: 0;
+                display: flex !important;
+                /* Force display flex when active */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             }
 
             .nav-toggle {
                 display: block !important;
+                z-index: 60;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-toggle.active {
+                transform: rotate(90deg);
             }
         }
     </style>

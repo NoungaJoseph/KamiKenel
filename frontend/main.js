@@ -2,7 +2,7 @@
 // Main functionality for interactive elements
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeNavigation();
     initializeScrollEffects();
     initializeContactForm();
@@ -18,24 +18,60 @@ function initializeNavigation() {
 
     // Mobile menu toggle
     if (navToggle) {
-        navToggle.addEventListener('click', function() {
+        navToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+
+            // Toggle icon between bars and times (X)
+            const icon = navToggle.querySelector('i');
+            if (icon) {
+                if (navMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
         });
     }
 
     // Close mobile menu when clicking on a link
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+
+            // Reset icon
+            const icon = navToggle.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function (e) {
+        if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+
+            // Reset icon
+            const icon = navToggle.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
     });
 
     // Smooth scroll for anchor links
     navLinks.forEach(link => {
         if (link.getAttribute('href').startsWith('#')) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetElement = document.getElementById(targetId);
@@ -53,9 +89,9 @@ function initializeNavigation() {
 // Scroll effects and animations
 function initializeScrollEffects() {
     const navbar = document.querySelector('.navbar');
-    
+
     // Add/remove navbar background on scroll
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
@@ -69,7 +105,7 @@ function initializeScrollEffects() {
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('fade-in');
@@ -86,18 +122,18 @@ function initializeScrollEffects() {
 // Contact form functionality
 function initializeContactForm() {
     const contactForm = document.getElementById('contactForm');
-    
+
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             // Get form data
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData);
-            
+
             // Show success message
             showNotification('Thank you for your message! We will contact you soon.', 'success');
-            
+
             // Reset form
             contactForm.reset();
         });
@@ -107,12 +143,12 @@ function initializeContactForm() {
 // Puppy gallery functionality
 function initializePuppyGallery() {
     const puppyCards = document.querySelectorAll('.puppy-card');
-    
+
     puppyCards.forEach(card => {
         const adoptBtn = card.querySelector('.adopt-btn');
-        
+
         if (adoptBtn) {
-            adoptBtn.addEventListener('click', function() {
+            adoptBtn.addEventListener('click', function () {
                 const puppyName = card.dataset.puppyName;
                 showAdoptionModal(puppyName);
             });
@@ -143,25 +179,25 @@ function showAdoptionModal(puppyName) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // Close modal functionality
     const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function () {
         document.body.removeChild(modal);
     });
-    
+
     // Handle form submission
     const adoptionForm = modal.querySelector('.adoption-form');
-    adoptionForm.addEventListener('submit', function(e) {
+    adoptionForm.addEventListener('submit', function (e) {
         e.preventDefault();
         showNotification('Adoption application submitted successfully!', 'success');
         document.body.removeChild(modal);
     });
-    
+
     // Close on background click
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === modal) {
             document.body.removeChild(modal);
         }
@@ -172,13 +208,13 @@ function showAdoptionModal(puppyName) {
 function initializeAnimations() {
     // Counter animation for statistics
     const counters = document.querySelectorAll('.counter');
-    
+
     counters.forEach(counter => {
         const target = parseInt(counter.dataset.target);
         const duration = 2000;
         const increment = target / (duration / 16);
         let current = 0;
-        
+
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
@@ -195,14 +231,14 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
-    
+
     document.body.appendChild(notification);
-    
+
     // Animate in
     setTimeout(() => {
         notification.classList.add('show');
     }, 100);
-    
+
     // Remove after 5 seconds
     setTimeout(() => {
         notification.classList.remove('show');
@@ -215,19 +251,19 @@ function showNotification(message, type = 'info') {
 // FAQ accordion functionality
 function initializeFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
-    
+
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
-        
-        question.addEventListener('click', function() {
+
+        question.addEventListener('click', function () {
             const isActive = item.classList.contains('active');
-            
+
             // Close all other items
             faqItems.forEach(otherItem => {
                 otherItem.classList.remove('active');
             });
-            
+
             // Toggle current item
             if (!isActive) {
                 item.classList.add('active');
@@ -237,7 +273,7 @@ function initializeFAQ() {
 }
 
 // Initialize FAQ when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeFAQ();
 });
 
@@ -302,25 +338,25 @@ function openBookingForm(puppyName) {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // Handle booking form submission
     const bookingForm = modal.querySelector('.booking-form');
-    bookingForm.addEventListener('submit', function(e) {
+    bookingForm.addEventListener('submit', function (e) {
         e.preventDefault();
         showNotification(`Booking request for ${puppyName} submitted successfully! We'll contact you within 24 hours.`, 'success');
         document.body.removeChild(modal);
     });
-    
+
     // Close modal functionality
     const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function () {
         document.body.removeChild(modal);
     });
-    
+
     // Close on background click
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === modal) {
             document.body.removeChild(modal);
         }

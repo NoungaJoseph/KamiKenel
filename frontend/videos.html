@@ -164,11 +164,6 @@
             transition: all 0.6s ease;
         }
 
-        .fade-in-up.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         @media (max-width: 768px) {
             .nav-menu {
                 position: fixed;
@@ -180,18 +175,25 @@
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                transition: left 0.3s ease;
+                transition: all 0.3s ease;
                 padding-top: 50px;
-                display: flex !important;
-                z-index: 999;
+                display: flex;
             }
 
             .nav-menu.active {
                 left: 0;
+                display: flex !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             }
 
             .nav-toggle {
                 display: block !important;
+                z-index: 60;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-toggle.active {
+                transform: rotate(90deg);
             }
         }
     </style>
@@ -203,56 +205,46 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-12 w-auto">
-                    <span class="ml-3 text-xl font-display font-bold text-gray-800">Kami Kennels</span>
-                </div>
-
+                <div class="flex items-center"><img src="resources/logo.png" alt="Kami Kennels Logo"
+                        class="h-12 w-auto"><span class="ml-3 text-xl font-display font-bold text-gray-800">Kami
+                        Kennels</span></div>
                 <!-- Navigation Menu -->
-                <div class="nav-menu hidden md:flex space-x-8">
-                    <a href="index.html" class="nav-link text-gray-700 font-medium">Home</a>
-                    <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
-                    <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
-                    <a href="videos.html" class="nav-link text-gray-700 font-medium">Videos</a>
-                    <a href="posts.html" class="nav-link text-gray-700 font-medium">Posts</a>
-                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
-                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
-                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
-                </div>
-
-                <!--Mobile Menu Toggle -->
-                <div class="nav-toggle md:hidden cursor-pointer"
-                    onclick="document.querySelector('.nav-menu').classList.toggle('active')">
-                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                <div class="nav-menu hidden md:flex space-x-8"><a href="index.html"
+                        class="nav-link text-gray-700 font-medium">Home</a><a href="about.html"
+                        class="nav-link text-gray-700 font-medium">About</a><a href="puppies.html"
+                        class="nav-link text-gray-700 font-medium">Available Puppies</a><a href="videos.html"
+                        class="nav-link text-gray-700 font-medium">Videos</a><a href="posts.html"
+                        class="nav-link text-gray-700 font-medium">Posts</a><a href="blog.html"
+                        class="nav-link text-gray-700 font-medium">Blog</a><a href="faq.html"
+                        class="nav-link text-gray-700 font-medium">FAQ</a><a href="contact.html"
+                        class="nav-link text-gray-700 font-medium">Contact</a></div>
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer"><i class="fas fa-bars text-2xl text-gray-700"></i>
                 </div>
             </div>
         </div>
     </nav>
-
     <!-- Hero Section -->
     <section class="pt-32 pb-20 bg-gradient-to-br from-orange-50 to-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
-                    Video Gallery
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">Video Gallery
                 </h1>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
-                    Watch our beautiful Karelian Bear Dogs in their natural element. See them play, train, hunt, and
-                    enjoy life with their families.
-                </p>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">Watch
+                    our beautiful Karelian Bear Dogs in their natural element. See them play,
+                    train,
+                    hunt,
+                    and enjoy life with their families. </p>
             </div>
         </div>
     </section>
-
     <!-- Video Grid -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Video 1: Hunting Accomplished -->
+                <!-- Video 1 -->
                 <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/hunting accomplished.mp4')">
-                    <div class="relative">
-                        <video class="w-full h-64 object-cover" poster="resources/hunting-poster.jpg">
+                    <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/hunting accomplished.mp4" type="video/mp4">
                         </video>
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -260,17 +252,15 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Successful Deer Hunt</h3>
-                        <p class="text-gray-600">Watch our Karelian Bear Dog demonstrate their exceptional hunting
-                            prowess as they successfully track and hunt a deer. This showcases the breed's incredible
-                            natural instincts and hunting abilities that have been preserved for generations.</p>
+                        <h3 class="text-xl font-bold mb-2">Hunting Accomplished - Deer Hunt</h3>
+                        <p class="text-gray-600">A successful hunting expedition showcasing the incredible
+                            tracking and hunting abilities of our Karelian Bear Dogs. Watch as they
+                            demonstrate the natural instincts they were bred for generations to perfect.</p>
                     </div>
                 </div>
-
-                <!-- Video 2: Playing -->
+                <!-- Video 2 -->
                 <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/playing.mp4')">
-                    <div class="relative">
-                        <video class="w-full h-64 object-cover" poster="resources/playing-poster.jpg">
+                    <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/playing.mp4" type="video/mp4">
                         </video>
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -278,17 +268,16 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Puppies at Play</h3>
-                        <p class="text-gray-600">Heartwarming footage of our dogs and their siblings playing together.
-                            Watch their playful energy, social bonds, and joyful interactions that demonstrate the
-                            wonderful temperament of Karelian Bear Dogs from an early age.</p>
+                        <h3 class="text-xl font-bold mb-2">Puppies Playing Together</h3>
+                        <p class="text-gray-600">Watch our adorable puppies and their siblings enjoying
+                            playtime together. This is how they develop their social skills,
+                            bond with each other,
+                            and learn important behaviors through play.</p>
                     </div>
                 </div>
-
-                <!-- Video 3: People Visiting -->
+                <!-- Video 3 -->
                 <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/people visiting.mp4')">
-                    <div class="relative">
-                        <video class="w-full h-64 object-cover" poster="resources/visiting-poster.jpg">
+                    <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/people visiting.mp4" type="video/mp4">
                         </video>
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -296,19 +285,17 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Working with Sheep</h3>
-                        <p class="text-gray-600">A day at the field with our dogs controlling and protecting the sheep.
-                            Our neighbors stopped by to visit and discuss the impressive herding and guarding
-                            capabilities of these remarkable dogs. See how they naturally take to livestock protection.
-                        </p>
+                        <h3 class="text-xl font-bold mb-2">Working with Sheep - Farm Life</h3>
+                        <p class="text-gray-600">Our dogs at work in the field with sheep,
+                            demonstrating their versatility and gentle nature. Neighbors stopped by
+                            to see them in action - these dogs are wonderful with livestock and
+                            people alike.</p>
                     </div>
                 </div>
-
-                <!-- Video 4: Daily Routine in Snow -->
+                <!-- Video 4 -->
                 <div class="video-card bg-white shadow-lg"
-                    onclick="openVideo('resources/daily routing in the snow.mp4')">
-                    <div class="relative">
-                        <video class="w-full h-64 object-cover" poster="resources/snow-poster.jpg">
+                    onclick="openVideo('resources/daily routine in the snow.mp4')">
+                    <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/daily routing in the snow.mp4" type="video/mp4">
                         </video>
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -316,17 +303,16 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Winter Walk Adventures</h3>
-                        <p class="text-gray-600">Join us for a peaceful winter walk through the snow. Karelian Bear Dogs
-                            thrive in cold weather thanks to their Nordic heritage. Watch them explore and enjoy their
-                            natural element in the beautiful snowy landscape.</p>
+                        <h3 class="text-xl font-bold mb-2">Daily Routine in the Snow</h3>
+                        <p class="text-gray-600">Karelian Bear Dogs thrive in cold climates !
+                            Watch our dogs enjoying their daily walk through the snow,
+                            showcasing their natural affinity for winter conditions and outdoor
+                            activities.</p>
                     </div>
                 </div>
-
-                <!-- Video 5: Water Exercise -->
+                <!-- Video 5 -->
                 <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/waterexercise.mp4')">
-                    <div class="relative">
-                        <video class="w-full h-64 object-cover" poster="resources/water-poster.jpg">
+                    <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/waterexercise.mp4" type="video/mp4">
                         </video>
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -334,17 +320,17 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Water Loving Dogs</h3>
-                        <p class="text-gray-600">Our Karelian Bear Dogs absolutely love water! Watch them enjoy swimming
-                            and water exercises. Despite their hunting heritage, these dogs are enthusiastic swimmers
-                            and love cooling off in lakes and rivers during warm weather.</p>
+                        <h3 class="text-xl font-bold mb-2">Water Exercise & Swimming</h3>
+                        <p class="text-gray-600">Our dogs absolutely love water ! Watch them
+                            enjoying their water exercise session. Swimming is excellent for
+                            their health,
+                            providing low-impact conditioning and endless fun for these
+                            energetic companions.</p>
                     </div>
                 </div>
-
-                <!-- Video 6: Hunting Bush Animal -->
+                <!-- Video 6 -->
                 <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/hunting.mp4')">
-                    <div class="relative">
-                        <video class="w-full h-64 object-cover" poster="resources/hunt-poster.jpg">
+                    <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/hunting.mp4" type="video/mp4">
                         </video>
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -352,41 +338,38 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Tracking in the Wild</h3>
-                        <p class="text-gray-600">Capturing the intense focus and determination as our dog spots and
-                            pursues a large bush animal. This video perfectly demonstrates the fearless nature and
-                            strong prey drive that makes Karelian Bear Dogs exceptional hunting companions.</p>
+                        <h3 class="text-xl font-bold mb-2">Hunting Instinct in Action
+                        </h3>
+                        <p class="text-gray-600">Watch the raw hunting instinct of a
+                            Karelian Bear Dog ! When a large bush animal was spotted,
+                            our dog immediately went into action. This breed's fearless
+                            nature
+                            and determination are perfectly captured in this moment.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
     <!-- Video Modal -->
     <div id="videoModal" class="video-modal">
-        <div class="video-modal-content">
-            <button class="video-close" onclick="closeVideo()">&times;</button>
-            <video id="modalVideo" controls autoplay class="w-full rounded-lg">
-                <source id="modalVideoSource" src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+        <div class="video-modal-content"><button class="video-close" onclick="closeVideo()">&times;
+            </button><video id="modalVideo" controls autoplay class="w-full rounded-lg">
+                <source id="modalVideoSource" src="" type="video/mp4">Your browser does not support the
+                video tag.
+            </video></div>
     </div>
-
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center mb-4">
-                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
-                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
-                    </div>
-                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament, and
-                        breed preservation.</p>
+                    <div class="flex items-center mb-4"><img src="resources/logo.png" alt="Kami Kennels Logo"
+                            class="h-10 w-auto invert"><span class="ml-3 text-xl font-display font-bold">Kami
+                            Kennels</span></div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health,
+                        temperament,
+                        and breed preservation.</p>
                 </div>
-
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
@@ -399,7 +382,6 @@
                         <li><a href="posts.html" class="text-gray-400 hover:text-white transition-colors">Posts</a></li>
                     </ul>
                 </div>
-
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
                     <ul class="space-y-2 text-gray-400">
@@ -407,30 +389,25 @@
                         <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
                     </ul>
                 </div>
-
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-facebook-f text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
-                    </div>
+                    <div class="flex space-x-4"><a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook-f text-xl"></i></a><a href="#"
+                            class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a></div>
                 </div>
             </div>
-
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+                <p>&copy;
+                    2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding
+                </p>
             </div>
         </div>
     </footer>
-
     <!-- JavaScript -->
     <script src="main.js"></script>
-    <script>
-        // Video modal functions
+    <script> // Video modal functions
+
         function openVideo(videoSrc) {
             const modal = document.getElementById('videoModal');
             const modalVideo = document.getElementById('modalVideo');

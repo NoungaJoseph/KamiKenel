@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts & History - Kami Kennels</title>
+    <title>Photo Gallery - Kami Kennels</title>
     <meta name="description"
-        content="Explore our history, achievements, and stories from Kami Kennels. See our journey breeding exceptional Karelian Bear Dogs.">
+        content="Explore our photo gallery featuring beautiful moments with our Karelian Bear Dogs.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,41 +74,38 @@
             width: 100%;
         }
 
-        .btn-primary {
-            background: var(--secondary-color);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            background: #d35400;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
-        }
-
-        .post-card {
-            transition: all 0.3s ease;
+        .gallery-item {
+            position: relative;
             overflow: hidden;
             border-radius: 15px;
             cursor: pointer;
+            aspect-ratio: 1;
         }
 
-        .post-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .post-card img {
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
 
-        .post-card:hover img {
+        .gallery-item:hover img {
             transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
         }
 
         .image-modal {
@@ -139,6 +136,7 @@
             max-width: 100%;
             max-height: 90vh;
             border-radius: 10px;
+            object-fit: contain;
         }
 
         .modal-close {
@@ -194,17 +192,26 @@
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                transition: left 0.3s ease;
+                transition: all 0.3s ease;
                 padding-top: 50px;
                 z-index: 999;
+                display: flex;
             }
 
             .nav-menu.active {
                 left: 0;
+                display: flex !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             }
 
             .nav-toggle {
                 display: block !important;
+                z-index: 60;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-toggle.active {
+                transform: rotate(90deg);
             }
         }
     </style>
@@ -227,277 +234,245 @@
                     <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
                     <a href="puppies.html" class="nav-link text-gray-700 font-medium">Available Puppies</a>
                     <a href="videos.html" class="nav-link text-gray-700 font-medium">Videos</a>
-                    <a href="posts.html" class="nav-link text-gray-700 font-medium">Posts</a>
-                    <!-- Hero Section -->
-                    <section class="pt-32 pb-20 bg-gradient-to-br from-blue-50 to-white">
-                        <div class="container mx-auto px-4">
-                            <div class="text-center mb-16">
-                                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
-                                    Our Story & History
-                                </h1>
-                                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up"
-                                    style="animation-delay: 0.2s;">
-                                    Explore our journey, achievements, and memorable moments breeding exceptional
-                                    Karelian Bear Dogs.
-                                    Each post tells a story of dedication, love, and excellence.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
+                    <a href="posts.html" class="nav-link text-gray-700 font-medium text-orange-600">Posts</a>
+                    <a href="blog.html" class="nav-link text-gray-700 font-medium">Blog</a>
+                    <a href="faq.html" class="nav-link text-gray-700 font-medium">FAQ</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
 
-                    <!-- Posts Grid -->
-                    <section class="py-20 bg-white">
-                        <div class="container mx-auto px-4">
-                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-                                <!-- Post 1 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post1.jpg')">
-                                    <img src="resources/post1.jpg" alt="Championship Win"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>December 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">Championship Win</h3>
-                                        <p class="text-gray-600">Our champion sire Taisto wins Best in Show at the
-                                            National Dog
-                                            Championship. A proud moment for Kami Kennels!</p>
-                                    </div>
-                                </div>
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-blue-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Photo Gallery
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    A collection of memorable moments with our Karelian Bear Dogs.
+                </p>
+            </div>
+        </div>
+    </section>
 
-                                <!-- Post 2 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post2.jpg')">
-                                    <img src="resources/post2.jpg" alt="New Litter Arrival"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>November 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">New Litter Arrival</h3>
-                                        <p class="text-gray-600">Welcoming 8 beautiful puppies! All healthy and showing
-                                            excellent
-                                            temperament from day one.</p>
-                                    </div>
-                                </div>
+    <!-- Gallery Grid -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Images p1 to p27 -->
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p1.jpg')">
+                    <img src="resources/p1.jpg" alt="Gallery Image 1" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p2.jpg')">
+                    <img src="resources/p2.jpg" alt="Gallery Image 2" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p3.jpg')">
+                    <img src="resources/p3.jpg" alt="Gallery Image 3" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p4.jpg')">
+                    <img src="resources/p4.jpg" alt="Gallery Image 4" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p5.jpg')">
+                    <img src="resources/p5.jpg" alt="Gallery Image 5" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p6.jpg')">
+                    <img src="resources/p6.jpg" alt="Gallery Image 6" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p7.jpg')">
+                    <img src="resources/p7.jpg" alt="Gallery Image 7" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p8.jpg')">
+                    <img src="resources/p8.jpg" alt="Gallery Image 8" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p9.jpg')">
+                    <img src="resources/p9.jpg" alt="Gallery Image 9" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p10.jpg')">
+                    <img src="resources/p10.jpg" alt="Gallery Image 10" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p11.jpg')">
+                    <img src="resources/p11.jpg" alt="Gallery Image 11" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p12.jpg')">
+                    <img src="resources/p12.jpg" alt="Gallery Image 12" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p13.jpg')">
+                    <img src="resources/p13.jpg" alt="Gallery Image 13" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p14.jpg')">
+                    <img src="resources/p14.jpg" alt="Gallery Image 14" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p15.jpg')">
+                    <img src="resources/p15.jpg" alt="Gallery Image 15" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p16.jpg')">
+                    <img src="resources/p16.jpg" alt="Gallery Image 16" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p17.jpg')">
+                    <img src="resources/p17.jpg" alt="Gallery Image 17" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p18.jpg')">
+                    <img src="resources/p18.jpg" alt="Gallery Image 18" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p19.jpg')">
+                    <img src="resources/p19.jpg" alt="Gallery Image 19" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p20.jpg')">
+                    <img src="resources/p20.jpg" alt="Gallery Image 20" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p21.jpg')">
+                    <img src="resources/p21.jpg" alt="Gallery Image 21" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p22.jpg')">
+                    <img src="resources/p22.jpg" alt="Gallery Image 22" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p23.jpg')">
+                    <img src="resources/p23.jpg" alt="Gallery Image 23" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p24.jpg')">
+                    <img src="resources/p24.jpg" alt="Gallery Image 24" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p25.jpg')">
+                    <img src="resources/p25.jpg" alt="Gallery Image 25" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p26.jpg')">
+                    <img src="resources/p26.jpg" alt="Gallery Image 26" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+                <div class="gallery-item fade-in-up" onclick="openImage('resources/p27.jpg')">
+                    <img src="resources/p27.jpg" alt="Gallery Image 27" loading="lazy">
+                    <div class="gallery-overlay"><i class="fas fa-search-plus text-white text-3xl"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                                <!-- Post 3 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post3.jpg')">
-                                    <img src="resources/post3.jpg" alt="Training Success"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>October 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">Training Success</h3>
-                                        <p class="text-gray-600">Our 6-month-old puppies completing their first advanced
-                                            training
-                                            session. Natural learners!</p>
-                                    </div>
-                                </div>
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <div class="image-modal-content">
+            <button class="modal-close" onclick="closeImage()">&times;</button>
+            <img id="modalImage" src="" alt="Full size image">
+        </div>
+    </div>
 
-                                <!-- Post 4 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post4.jpg')">
-                                    <img src="resources/post4.jpg" alt="Happy Adoptions"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>September 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">Happy Adoptions</h3>
-                                        <p class="text-gray-600">Five of our puppies found their forever homes this
-                                            month. Watching them
-                                            leave with loving families never gets old!</p>
-                                    </div>
-                                </div>
-
-                                <!-- Post 5 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post5.jpg')">
-                                    <img src="resources/post5.jpg" alt="Health Testing"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>August 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">Complete Health Testing</h3>
-                                        <p class="text-gray-600">All our breeding dogs completed comprehensive health
-                                            screenings with
-                                            excellent results. Health first!</p>
-                                    </div>
-                                </div>
-
-                                <!-- Post 6 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post6.jpg')">
-                                    <img src="resources/post6.jpg" alt="Kennel Expansion"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>July 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">Kennel Expansion</h3>
-                                        <p class="text-gray-600">Completed our new outdoor play area! More space for our
-                                            dogs to run,
-                                            play, and enjoy nature.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Post 7 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post7.jpg')">
-                                    <img src="resources/post7.jpg" alt="International Recognition"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>June 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">International Recognition</h3>
-                                        <p class="text-gray-600">Featured in International Karelian Bear Dog Breeders
-                                            Magazine for our
-                                            breeding program excellence.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Post 8 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post8.jpg')">
-                                    <img src="resources/post8.jpg" alt="Hunting Heritage"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>May 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">Preserving Hunting Heritage</h3>
-                                        <p class="text-gray-600">Documenting the natural hunting instincts of our dogs.
-                                            This breed's
-                                            history and purpose remain strong.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Post 9 -->
-                                <div class="post-card bg-white shadow-lg" onclick="openImage('resources/post9.jpg')">
-                                    <img src="resources/post9.jpg" alt="15 Years Anniversary"
-                                        class="w-full h-64 object-cover">
-                                    <div class="p-6">
-                                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                                            <i class="fas fa-calendar mr-2"></i>
-                                            <span>April 2024</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2">15 Years of Excellence</h3>
-                                        <p class="text-gray-600">Celebrating 15 years of breeding exceptional Karelian
-                                            Bear Dogs. Thank
-                                            you to all our families!</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Image Modal -->
-                    <div id="imageModal" class="image-modal">
-                        <div class="image-modal-content">
-                            <button class="modal-close" onclick="closeImage()">&times;</button>
-                            <img id="modalImage" src="" alt="Full size image">
-                        </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="resources/logo.png" alt="Kami Kennels Logo" class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
                     </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health,
+                        temperament,
+                        and breed preservation.</p>
+                </div>
 
-                    <!-- Footer -->
-                    <footer class="bg-gray-800 text-white py-12">
-                        <div class="container mx-auto px-4">
-                            <div class="grid md:grid-cols-4 gap-8">
-                                <div>
-                                    <div class="flex items-center mb-4">
-                                        <img src="resources/logo.png" alt="Kami Kennels Logo"
-                                            class="h-10 w-auto invert">
-                                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
-                                    </div>
-                                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health,
-                                        temperament, and
-                                        breed preservation.</p>
-                                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="videos.html" class="text-gray-400 hover:text-white transition-colors">Videos</a>
+                        </li>
+                        <li><a href="posts.html" class="text-gray-400 hover:text-white transition-colors">Posts</a></li>
+                    </ul>
+                </div>
 
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                                    <ul class="space-y-2">
-                                        <li><a href="index.html"
-                                                class="text-gray-400 hover:text-white transition-colors">Home</a></li>
-                                        <li><a href="about.html"
-                                                class="text-gray-400 hover:text-white transition-colors">About</a></li>
-                                        <li><a href="puppies.html"
-                                                class="text-gray-400 hover:text-white transition-colors">Available
-                                                Puppies</a></li>
-                                        <li><a href="videos.html"
-                                                class="text-gray-400 hover:text-white transition-colors">Videos</a>
-                                        </li>
-                                        <li><a href="posts.html"
-                                                class="text-gray-400 hover:text-white transition-colors">Posts</a></li>
-                                    </ul>
-                                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>kevinflores3576@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
 
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
-                                    <ul class="space-y-2 text-gray-400">
-                                        <li><i class="fas fa-envelope mr-2"></i>kevinflores3576@gmail.com</li>
-                                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
-                                    </ul>
-                                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-                                <div>
-                                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
-                                    <div class="flex space-x-4">
-                                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                                            <i class="fab fa-facebook-f text-xl"></i>
-                                        </a>
-                                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                                            <i class="fab fa-instagram text-xl"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy;
+                    2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
 
-                            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                                <p>&copy; 2024 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog
-                                    Breeding</p>
-                            </div>
-                        </div>
-                    </footer>
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // Image modal functions
+        function openImage(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
 
-                    <!-- JavaScript -->
-                    <script src="main.js"></script>
-                    <script>
-                        // Image modal functions
-                        function openImage(imageSrc) {
-                            const modal = document.getElementById('imageModal');
-                            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.classList.add('active');
+        }
 
-                            modalImage.src = imageSrc;
-                            modal.classList.add('active');
-                        }
+        function closeImage() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
 
-                        function closeImage() {
-                            const modal = document.getElementById('imageModal');
-                            modal.classList.remove('active');
-                        }
+        // Close modal when clicking outside image
+        document.getElementById('imageModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeImage();
+            }
+        });
 
-                        // Close modal when clicking outside image
-                        document.getElementById('imageModal').addEventListener('click', function (e) {
-                            if (e.target === this) {
-                                closeImage();
-                            }
-                        });
-
-                        // Close modal with Escape key
-                        document.addEventListener('keydown', function (e) {
-                            if (e.key === 'Escape') {
-                                closeImage();
-                            }
-                        });
-                    </script>
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeImage();
+            }
+        });
+    </script>
 </body>
 
 </html>
