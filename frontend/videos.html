@@ -9,7 +9,7 @@
         content="Watch our Karelian Bear Dogs in action. View videos of our puppies playing, training, and showcasing their incredible hunting instincts.">
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./dist/output.css" rel="stylesheet">
 
     <!-- Google Fonts -->
     <link
@@ -165,25 +165,75 @@
         }
 
         @media (max-width: 768px) {
+
+            /* TEST */
             .nav-menu {
                 position: fixed;
                 top: 70px;
                 left: -100%;
                 width: 100%;
                 height: calc(100vh - 70px);
-                background: white;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
                 flex-direction: column;
-                justify-content: flex-start;
+                justify-content: center;
                 align-items: center;
-                transition: all 0.3s ease;
-                padding-top: 50px;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                padding-top: 0;
                 display: flex;
+                gap: 2rem;
             }
 
             .nav-menu.active {
                 left: 0;
                 display: flex !important;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu .nav-link {
+                font-size: 1.25rem;
+                font-weight: 600;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-menu.active .nav-link {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Stagger animation for links */
+            .nav-menu.active .nav-link:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(2) {
+                transition-delay: 0.15s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(4) {
+                transition-delay: 0.25s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(5) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(6) {
+                transition-delay: 0.35s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(7) {
+                transition-delay: 0.4s;
+            }
+
+            .nav-menu.active .nav-link:nth-child(8) {
+                transition-delay: 0.45s;
             }
 
             .nav-toggle {
@@ -227,14 +277,14 @@
     <!-- Hero Section -->
     <section class="pt-32 pb-20 bg-gradient-to-br from-orange-50 to-white">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 relative z-10">
                 <h1 class="text-5xl md:text-6xl font-display font-bold text-gray-800 mb-6 fade-in-up">Video Gallery
                 </h1>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">Watch
-                    our beautiful Karelian Bear Dogs in their natural element. See them play,
-                    train,
-                    hunt,
-                    and enjoy life with their families. </p>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    A collection of memorable moments captured on video with our Karelian Bear Dogs.
+                </p>
+
+
             </div>
         </div>
     </section>
@@ -243,7 +293,8 @@
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Video 1 -->
-                <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/hunting accomplished.mp4')">
+                <div class="video-card bg-white shadow-lg"
+                    onclick="openVideo('resources/hunting accomplished.mp4', 'Hunting Accomplished - Deer Hunt')">
                     <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/hunting accomplished.mp4" type="video/mp4">
                         </video>
@@ -259,7 +310,8 @@
                     </div>
                 </div>
                 <!-- Video 2 -->
-                <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/playing.mp4')">
+                <div class="video-card bg-white shadow-lg"
+                    onclick="openVideo('resources/playing.mp4', 'Puppies Playing Together')">
                     <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/playing.mp4" type="video/mp4">
                         </video>
@@ -276,7 +328,8 @@
                     </div>
                 </div>
                 <!-- Video 3 -->
-                <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/people visiting.mp4')">
+                <div class="video-card bg-white shadow-lg"
+                    onclick="openVideo('resources/people visiting.mp4', 'Working with Sheep - Farm Life')">
                     <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/people visiting.mp4" type="video/mp4">
                         </video>
@@ -294,7 +347,7 @@
                 </div>
                 <!-- Video 4 -->
                 <div class="video-card bg-white shadow-lg"
-                    onclick="openVideo('resources/daily routine in the snow.mp4')">
+                    onclick="openVideo('resources/daily routine in the snow.mp4', 'Daily Routine in the Snow')">
                     <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/daily routing in the snow.mp4" type="video/mp4">
                         </video>
@@ -311,7 +364,8 @@
                     </div>
                 </div>
                 <!-- Video 5 -->
-                <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/waterexercise.mp4')">
+                <div class="video-card bg-white shadow-lg"
+                    onclick="openVideo('resources/waterexercise.mp4', 'Water Exercise & Swimming')">
                     <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/waterexercise.mp4" type="video/mp4">
                         </video>
@@ -329,7 +383,8 @@
                     </div>
                 </div>
                 <!-- Video 6 -->
-                <div class="video-card bg-white shadow-lg" onclick="openVideo('resources/hunting.mp4')">
+                <div class="video-card bg-white shadow-lg"
+                    onclick="openVideo('resources/hunting.mp4', 'Hunting Instinct in Action')">
                     <div class="relative"><video class="w-full h-64 object-cover" preload="metadata">
                             <source src="resources/hunting.mp4" type="video/mp4">
                         </video>
@@ -352,11 +407,14 @@
     </section>
     <!-- Video Modal -->
     <div id="videoModal" class="video-modal">
-        <div class="video-modal-content"><button class="video-close" onclick="closeVideo()">&times;
-            </button><video id="modalVideo" controls autoplay class="w-full rounded-lg">
+        <div class="video-modal-content">
+            <button class="video-close" onclick="closeVideo()">&times;</button>
+            <h3 id="modalTitle" class="text-2xl font-bold text-white mb-4 text-center"></h3>
+            <video id="modalVideo" controls autoplay class="w-full max-h-[80vh] rounded-lg">
                 <source id="modalVideoSource" src="" type="video/mp4">Your browser does not support the
                 video tag.
-            </video></div>
+            </video>
+        </div>
     </div>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
@@ -408,11 +466,13 @@
     <script src="main.js"></script>
     <script> // Video modal functions
 
-        function openVideo(videoSrc) {
+        function openVideo(videoSrc, title) {
             const modal = document.getElementById('videoModal');
             const modalVideo = document.getElementById('modalVideo');
             const modalVideoSource = document.getElementById('modalVideoSource');
 
+            const modalTitle = document.getElementById('modalTitle');
+            if (modalTitle) modalTitle.textContent = title || '';
             modalVideoSource.src = videoSrc;
             modalVideo.load();
             modal.classList.add('active');
