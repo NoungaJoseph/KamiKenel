@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify && npm run copy-html",
-    "copy-html": "mkdir dist 2>/dev/null; cp *.html dist/ 2>/dev/null || copy *.html dist\\ 2>/dev/null || xcopy *.html dist\\ /Y 2>/dev/null"
+  "copy-html": "if not exist dist mkdir dist && copy *.html dist\\ >nul 2>&1 || echo No HTML files to copy"
   },
   "keywords": [],
   "author": "",
