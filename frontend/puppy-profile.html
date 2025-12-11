@@ -233,31 +233,7 @@
                     </div>
                 </div>
 
-                <!-- Parents Information -->
-                <div class="bg-white rounded-2xl p-8 shadow-xl">
-                    <h2 class="text-3xl font-display font-bold text-gray-800 mb-6 text-center">Meet the Parents</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Father -->
-                        <div class="parent-card">
-                            <img src="resources/parents.jpg" alt="Father"
-                                onclick="openLightbox('resources/parents.jpg')"
-                                class="cursor-pointer hover:opacity-90 transition">
-                            <h3 class="text-xl font-bold mb-2">Father: Taisto</h3>
-                            <p class="text-gray-600">Champion sire with excellent hunting instincts and stable
-                                temperament. Proven track record of producing healthy, well-tempered puppies.</p>
-                        </div>
-
-                        <!-- Mother -->
-                        <div class="parent-card">
-                            <img src="resources/parents.jpg" alt="Mother"
-                                onclick="openLightbox('resources/parents.jpg')"
-                                class="cursor-pointer hover:opacity-90 transition">
-                            <h3 class="text-xl font-bold mb-2">Mother: Helmi</h3>
-                            <p class="text-gray-600">Beautiful dam with gentle nature and strong maternal instincts.
-                                Known for producing puppies with excellent temperament and conformation.</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Parents information will be rendered on each puppy's profile dynamically (so we can show the right parents per puppy) -->
             </div>
         </div>
     </div>
@@ -333,7 +309,100 @@
                 description: "Sweet and gentle female with a calm demeanor. Very affectionate and loves attention. Perfect for families looking for a loving companion with a gentle spirit.",
                 traits: ["Sweet", "Gentle", "Affectionate"],
                 traitColors: ["pink", "purple", "rose"],
-                images: ["resources/5.jpg", "resources/5copy.jpg"]
+                images: ["resources/5.jpg", "resources/5copy.jpg"],
+                parents: {
+                    father: {
+                        name: "Taisto",
+                        image: "resources/parents.jpg",
+                        description: "Champion sire with strong hunting instincts and a calm temperament. Proven in field work and beloved by families."
+                    },
+                    mother: {
+                        name: "Helmi",
+                        image: "resources/parents.jpg",
+                        description: "Gentle and attentive dam with excellent maternal instincts. Produces well-tempered puppies with solid health."
+                    }
+                }
+            },
+            // Canadian litter
+            storm: {
+                name: "Storm",
+                gender: "Male",
+                age: "10 weeks",
+                weight: "11 lbs",
+                color: "Black with white markings",
+                price: 800,
+                description: "Powerful and confident male with striking markings. Natural leader with strong hunting drive and excellent temperament with family.",
+                traits: ["Confident", "Powerful", "Playful"],
+                traitColors: ["blue", "orange", "green"],
+                images: ["resources/ca1.jpg"],
+                parents: {
+                    father: { name: "Cadad", image: "resources/cadad.jpg", description: "Champion from a strong working line, known for endurance and steady temperament." },
+                    mother: { name: "Camom", image: "resources/camom.jpg", description: "Loving dam with excellent mothering instincts and stable temperament." }
+                }
+            },
+            aurora: {
+                name: "Aurora",
+                gender: "Female",
+                age: "10 weeks",
+                weight: "9.5 lbs",
+                color: "Black with white markings",
+                price: 800,
+                description: "Intelligent and graceful female with beautiful markings. Alert and responsive, showing excellent instincts and gentle nature.",
+                traits: ["Graceful", "Intelligent", "Alert"],
+                traitColors: ["pink", "purple", "blue"],
+                images: ["resources/ca2.jpg"],
+                parents: {
+                    father: { name: "Cadad", image: "resources/cadad.jpg", description: "Champion from a strong working line, known for endurance and steady temperament." },
+                    mother: { name: "Camom", image: "resources/camom.jpg", description: "Loving dam with excellent mothering instincts and stable temperament." }
+                }
+            },
+            kodiak: {
+                name: "Kodiak",
+                gender: "Male",
+                age: "10 weeks",
+                weight: "12 lbs",
+                color: "Black with white markings",
+                price: 800,
+                description: "Bold and adventurous male with exceptional courage. Strong prey drive and protective instincts with a playful personality.",
+                traits: ["Bold", "Adventurous", "Energetic"],
+                traitColors: ["red", "yellow", "orange"],
+                images: ["resources/ca3.jpg"],
+                parents: {
+                    father: { name: "Cadad", image: "resources/cadad.jpg", description: "Champion from a strong working line, known for endurance and steady temperament." },
+                    mother: { name: "Camom", image: "resources/camom.jpg", description: "Loving dam with excellent mothering instincts and stable temperament." }
+                }
+            },
+            zara: {
+                name: "Zara",
+                gender: "Female",
+                age: "10 weeks",
+                weight: "9 lbs",
+                color: "Black with white chest and paws",
+                price: 800,
+                description: "Spirited and independent female with excellent hunting instincts. Loyal companion with wonderful family manners and playful spirit.",
+                traits: ["Spirited", "Loyal", "Playful"],
+                traitColors: ["pink", "purple", "yellow"],
+                images: ["resources/ca4.jpg"],
+                parents: {
+                    father: { name: "Cadad", image: "resources/cadad.jpg", description: "Champion from a strong working line, known for endurance and steady temperament." },
+                    mother: { name: "Camom", image: "resources/camom.jpg", description: "Loving dam with excellent mothering instincts and stable temperament." }
+                }
+            },
+            ember: {
+                name: "Ember",
+                gender: "Female",
+                age: "10 weeks",
+                weight: "8.5 lbs",
+                color: "Black with white markings",
+                price: 800,
+                description: "Fiery and spirited female with a warm personality. Quick learner with strong bonding ability and exceptional hunting potential.",
+                traits: ["Spirited", "Smart", "Warm"],
+                traitColors: ["red", "purple", "pink"],
+                images: ["resources/ca5.jpg"],
+                parents: {
+                    father: { name: "Cadad", image: "resources/cadad.jpg", description: "Champion from a strong working line, known for endurance and steady temperament." },
+                    mother: { name: "Camom", image: "resources/camom.jpg", description: "Loving dam with excellent mothering instincts and stable temperament." }
+                }
             }
         };
 
@@ -382,6 +451,47 @@
                     gallery.appendChild(imgElement);
                 }
             });
+
+            // Render parents section dynamically if parents info exists
+            if (puppy.parents) {
+                const parentsSection = document.createElement('div');
+                parentsSection.className = 'bg-white rounded-2xl p-8 shadow-xl mt-8';
+
+                const heading = document.createElement('h2');
+                heading.className = 'text-3xl font-display font-bold text-gray-800 mb-6 text-center';
+                heading.textContent = 'Meet the Parents';
+                parentsSection.appendChild(heading);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid md:grid-cols-2 gap-8';
+
+                const father = puppy.parents.father;
+                const mother = puppy.parents.mother;
+
+                const fatherCard = document.createElement('div');
+                fatherCard.className = 'parent-card';
+                fatherCard.innerHTML = `
+                    <img src="${father.image}" alt="Father - ${father.name}" onclick="openLightbox('${father.image}')" class="cursor-pointer hover:opacity-90 transition">
+                    <h3 class="text-xl font-bold mb-2">Father: ${father.name}</h3>
+                    <p class="text-gray-600">${father.description}</p>
+                `;
+
+                const motherCard = document.createElement('div');
+                motherCard.className = 'parent-card';
+                motherCard.innerHTML = `
+                    <img src="${mother.image}" alt="Mother - ${mother.name}" onclick="openLightbox('${mother.image}')" class="cursor-pointer hover:opacity-90 transition">
+                    <h3 class="text-xl font-bold mb-2">Mother: ${mother.name}</h3>
+                    <p class="text-gray-600">${mother.description}</p>
+                `;
+
+                grid.appendChild(fatherCard);
+                grid.appendChild(motherCard);
+                parentsSection.appendChild(grid);
+
+                // Append parents section after the characteristics block
+                const container = document.querySelector('.max-w-6xl');
+                if (container) container.appendChild(parentsSection);
+            }
         } else {
             // Redirect to puppies page if no valid ID
             window.location.href = 'puppies.html';
