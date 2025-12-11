@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping & Delivery - Kami Kennels</title>
+    <meta name="description"
+        content="Learn about our safe and reliable puppy shipping process. Fast delivery to the USA, Canada, and Europe with full tracking and care.">
+
+    <!-- Tailwind CSS -->
+    <link href="./dist/output.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('resources/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 28px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-left.fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-right.fade-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .shipping-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .shipping-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            width: 48%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            text-align: right;
+            padding-right: 4%;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 52%;
+            text-align: left;
+            padding-left: 4%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--secondary-color);
+            border: 4px solid white;
+            border-radius: 50%;
+            top: 1.5rem;
+            box-shadow: 0 0 0 4px var(--bg-light);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .region-badge {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-box {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-box i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                margin-left: 0 !important;
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-dot {
+                left: 10px;
+            }
+
+            .hero-section {
+                background-attachment: scroll;
+                text-align: center;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                transition: all 0.3s ease;
+                padding-top: 50px;
+                display: flex;
+            }
+
+            .nav-menu.active {
+                left: 0;
+                display: flex !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-toggle {
+                display: block !important;
+                z-index: 60;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-toggle.active {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center"><img src="resources/logo.png" alt="Kami Kennels Logo"
+                        class="h-12 w-auto"><span class="ml-3 text-xl font-display font-bold text-gray-800">Kami
+                        Kennels</span></div>
+                <!-- Navigation Menu -->
+                <div class="nav-menu hidden md:flex space-x-8"><a href="index.html"
+                        class="nav-link text-gray-700 font-medium">Home</a><a href="about.html"
+                        class="nav-link text-gray-700 font-medium">About</a><a href="puppies.html"
+                        class="nav-link text-gray-700 font-medium">Available Puppies</a><a href="shipping.html"
+                        class="nav-link text-gray-700 font-medium">Shipping</a><a href="videos.html"
+                        class="nav-link text-gray-700 font-medium">Videos</a><a href="posts.html"
+                        class="nav-link text-gray-700 font-medium">Posts</a><a href="blog.html"
+                        class="nav-link text-gray-700 font-medium">Blog</a><a href="faq.html"
+                        class="nav-link text-gray-700 font-medium">FAQ</a><a href="contact.html"
+                        class="nav-link text-gray-700 font-medium">Contact</a></div>
+                <!-- Mobile Menu Toggle -->
+                <div class="nav-toggle md:hidden cursor-pointer"><i class="fas fa-bars text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 fade-in-up">Safe & Fast
+                    Puppy Shipping </h1>
+                <p class="text-xl md:text-2xl text-white mb-8 leading-relaxed fade-in-up"
+                    style="animation-delay: 0.2s;">We deliver your new family member safely and quickly to doorsteps
+                    across the USA, Canada, and Europe. </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shipping Overview Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Shipping Regions & Timeline </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">At Kami
+                    Kennels,
+                    we understand how important it is to get your puppy safely and quickly. Our shipping process is
+                    designed with your peace of mind in mind. </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- USA Card -->
+                <div class="bg-white rounded-lg shadow-lg p-8 fade-in-up shipping-card"
+                    style="animation-delay: 0.3s;">
+                    <div class="region-badge"><i class="fas fa-flag-usa mr-2"></i>United States</div>
+                    <div class="mb-6">
+                        <i class="fas fa-truck text-4xl text-orange-500 mb-4"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold text-gray-800 mb-3">Maximum 48 Hours</h3>
+                    <p class="text-gray-600 mb-6">Your puppy will arrive at your doorstep within 48 hours of
+                        shipment. We partner with reliable pet-safe airlines and ground transportation to ensure
+                        comfort throughout the journey.</p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Climate-controlled transport</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Real-time tracking</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Direct to your location</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Pet care attendants on board</li>
+                    </ul>
+                </div>
+
+                <!-- Canada Card -->
+                <div class="bg-white rounded-lg shadow-lg p-8 fade-in-up shipping-card"
+                    style="animation-delay: 0.4s;">
+                    <div class="region-badge"><i class="fas fa-map-pin mr-2"></i>Canada</div>
+                    <div class="mb-6">
+                        <i class="fas fa-plane text-4xl text-orange-500 mb-4"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold text-gray-800 mb-3">Approximately 30 Hours</h3>
+                    <p class="text-gray-600 mb-6">Our Canadian deliveries take approximately 30 hours maximum. With our trusted breeders located across Canada, your puppy will be delivered directly from our local network without any border complications.</p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Local breeder network</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Direct delivery to your location</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>All provinces covered</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Health certificates included</li>
+                    </ul>
+                </div>
+
+                <!-- Europe Card -->
+                <div class="bg-white rounded-lg shadow-lg p-8 fade-in-up shipping-card"
+                    style="animation-delay: 0.5s;">
+                    <div class="region-badge"><i class="fas fa-globe mr-2"></i>Europe</div>
+                    <div class="mb-6">
+                        <i class="fas fa-ship text-4xl text-orange-500 mb-4"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold text-gray-800 mb-3">Maximum 24 Hours</h3>
+                    <p class="text-gray-600 mb-6">Fastest delivery time! European destinations receive puppies within 24 hours. Through our established network of European breeders, puppies are delivered directly to your location with seamless coordination.</p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>European breeder network</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Direct door-to-door delivery</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Multiple countries served</li>
+                        <li><i class="fas fa-check text-orange-500 mr-3"></i>Premium pet care</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shipping Process Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Our Shipping Process </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+                    From puppy selection to arrival at your home, we take every step to ensure safety and comfort.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- Step 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center fade-in-up">
+                    <div
+                        class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">
+                        1</div>
+                    <h3 class="text-xl font-bold mb-2">Booking Confirmed</h3>
+                    <p class="text-gray-600 text-sm">You select your puppy and confirm the adoption. We begin
+                        health preparations.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center fade-in-up"
+                    style="animation-delay: 0.2s;">
+                    <div
+                        class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">
+                        2</div>
+                    <h3 class="text-xl font-bold mb-2">Documentation</h3>
+                    <p class="text-gray-600 text-sm">We prepare all necessary health certificates, vaccination
+                        records, and travel documents.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center fade-in-up"
+                    style="animation-delay: 0.4s;">
+                    <div
+                        class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">
+                        3</div>
+                    <h3 class="text-xl font-bold mb-2">Airport Transport</h3>
+                    <p class="text-gray-600 text-sm">Your puppy is carefully transported to the airport with a pet
+                        care specialist.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center fade-in-up"
+                    style="animation-delay: 0.6s;">
+                    <div
+                        class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">
+                        4</div>
+                    <h3 class="text-xl font-bold mb-2">In-Flight Care</h3>
+                    <p class="text-gray-600 text-sm">Your puppy flies in a climate-controlled, pet-safe environment
+                        with constant monitoring.</p>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center fade-in-up"
+                    style="animation-delay: 0.8s;">
+                    <div
+                        class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">
+                        5</div>
+                    <h3 class="text-xl font-bold mb-2">Arrival Processing</h3>
+                    <p class="text-gray-600 text-sm">Upon arrival, your puppy goes through health checks and
+                        customs clearance if needed.</p>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center fade-in-up"
+                    style="animation-delay: 1.0s;">
+                    <div
+                        class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">
+                        6</div>
+                    <h3 class="text-xl font-bold mb-2">Final Delivery</h3>
+                    <p class="text-gray-600 text-sm">Your puppy is delivered directly to you with our team ensuring
+                        safe handoff.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    What's Included in Shipping </h2>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box fade-in-up">
+                    <i class="fas fa-certificate"></i>
+                    <h3 class="text-xl font-bold mb-2">Health Certificates</h3>
+                    <p class="text-gray-600">Complete veterinary health documentation and vaccination records.</p>
+                </div>
+
+                <div class="info-box fade-in-up" style="animation-delay: 0.2s;">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 class="text-xl font-bold mb-2">Travel Insurance</h3>
+                    <p class="text-gray-600">Full coverage during transit for your peace of mind.</p>
+                </div>
+
+                <div class="info-box fade-in-up" style="animation-delay: 0.4s;">
+                    <i class="fas fa-map"></i>
+                    <h3 class="text-xl font-bold mb-2">Real-Time Tracking</h3>
+                    <p class="text-gray-600">Monitor your puppy's journey with live tracking updates.</p>
+                </div>
+
+                <div class="info-box fade-in-up" style="animation-delay: 0.6s;">
+                    <i class="fas fa-box"></i>
+                    <h3 class="text-xl font-bold mb-2">Comfort Kit</h3>
+                    <p class="text-gray-600">Travel crate with bedding, toys, and food for the journey.</p>
+                </div>
+
+                <div class="info-box fade-in-up" style="animation-delay: 0.8s;">
+                    <i class="fas fa-phone"></i>
+                    <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
+                    <p class="text-gray-600">Our team is available anytime for questions or concerns.</p>
+                </div>
+
+                <div class="info-box fade-in-up" style="animation-delay: 1.0s;">
+                    <i class="fas fa-heart"></i>
+                    <h3 class="text-xl font-bold mb-2">Lifetime Support</h3>
+                    <p class="text-gray-600">We're here to help after arrival with adjustment support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                    Shipping FAQs </h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3"><i
+                            class="fas fa-question-circle text-orange-500 mr-2"></i>Is it safe to ship puppies?</h3>
+                    <p class="text-gray-600">Absolutely! We use certified pet-safe airlines and professional pet
+                        transport services with decades of experience. Your puppy travels in climate-controlled,
+                        pressurized cargo holds with constant monitoring.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in-up" style="animation-delay: 0.2s;">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3"><i
+                            class="fas fa-question-circle text-orange-500 mr-2"></i>What does shipping cost?</h3>
+                    <p class="text-gray-600">Shipping costs vary by region. USA shipping typically ranges from
+                        $200-$400, Canada $300-$500, and Europe $400-$600. We provide a quote during your booking
+                        consultation.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in-up" style="animation-delay: 0.4s;">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3"><i
+                            class="fas fa-question-circle text-orange-500 mr-2"></i>Can I pick up my puppy in
+                        person?</h3>
+                    <p class="text-gray-600">Yes! If you're able to travel to us, we offer pickup options at a
+                        discounted rate. Contact us to arrange this option.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in-up" style="animation-delay: 0.6s;">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3"><i
+                            class="fas fa-question-circle text-orange-500 mr-2"></i>What if my puppy gets sick during
+                        shipping?</h3>
+                    <p class="text-gray-600">Our puppies are thoroughly health-checked before shipping. We provide
+                        travel insurance and have emergency vet contacts in all major airports along the route.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in-up" style="animation-delay: 0.8s;">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3"><i
+                            class="fas fa-question-circle text-orange-500 mr-2"></i>Do you ship internationally?</h3>
+                    <p class="text-gray-600">Yes, we ship to select countries in Europe, Canada, and the USA. We
+                        handle all international documentation, customs, and quarantine requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-800 mb-6 fade-in-up">
+                Ready to Welcome Your Puppy? </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8 fade-in-up" style="animation-delay: 0.2s;">
+                Contact us today to discuss shipping options and timeline for your new family member. </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in-up" style="animation-delay: 0.4s;">
+                <a href="contact.html" class="btn-primary"><i class="fas fa-envelope mr-2"></i>Contact Us </a>
+                <a href="puppies.html" class="btn-secondary"><i class="fas fa-paw mr-2"></i>View Puppies </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4"><img src="resources/logo.png" alt="Kami Kennels Logo"
+                            class="h-10 w-auto invert">
+                        <span class="ml-3 text-xl font-display font-bold">Kami Kennels</span>
+                    </div>
+                    <p class="text-gray-400">Premium Karelian Bear Dog breeding with a focus on health, temperament,
+                        and breed preservation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About
+                                Us</a></li>
+                        <li><a href="puppies.html" class="text-gray-400 hover:text-white transition-colors">Available
+                                Puppies</a></li>
+                        <li><a href="shipping.html" class="text-gray-400 hover:text-white transition-colors">Shipping</a>
+                        </li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i>kevinflores3576@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>International Locations</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4"><a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook-f text-xl"></i></a><a href="#"
+                            class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a></div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Kami Kennels. All rights reserved. | Professional Karelian Bear Dog Breeding</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>
