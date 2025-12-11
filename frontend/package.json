@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify && npm run copy-html",
-  "copy-html": "if not exist dist mkdir dist && copy *.html dist\\ >nul 2>&1 || echo No HTML files to copy"
+  "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify && npm run copy-html",
+  "copy-html": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.readdirSync('.').filter(f=>f.endsWith('.html')).forEach(f=>fs.copyFileSync(f,'dist/'+f))\""
   },
   "keywords": [],
   "author": "",
